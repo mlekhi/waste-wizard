@@ -13,6 +13,7 @@ import Tutorial from './pages/Tutorial';
 function App() {
   return (
     <div className="App">
+      <p>Waste Wizard</p>
       <Router>
         <div>
           <Routes>
