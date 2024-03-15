@@ -17,15 +17,15 @@ function App() {
       <Router>
         <div>
           <Routes>
-            <Route exact path="*" component={Default} />
-            <Route exact path="/Default" component={Default} />
-            <Route exact path="/Play" component={Play} />
-            <Route exact path="/Debug" component={Debug} />
-            <Route exact path="/Login" component={Login} />
-            <Route exact path="/Shop" component={Shop} />
-            <Route exact path="/Instructor" component={Instructor} />
-            <Route exact path="/Leaderboard" component={Leaderboard} />
-            <Route exact path="/Tutorial" component={Tutorial} />
+            <Route exact path="*" element={<Default/>} />
+            <Route exact path="/Default" element={<Default/>} />
+            <Route exact path="/Play" element={<Play/>} />
+            <Route exact path="/Debug" element={<Debug/>} />
+            <Route exact path="/Login" element={<Login/>} />
+            <Route exact path="/Shop" element={<Shop/>} />
+            <Route exact path="/Instructor" element={<Instructor/>} />
+            <Route exact path="/Leaderboard" element={<Leaderboard/>} />
+            <Route exact path="/Tutorial" element={<Tutorial/>} />
           </Routes>
         </div>
       </Router>
