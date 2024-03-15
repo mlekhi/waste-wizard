@@ -9,10 +9,12 @@ import Shop from './pages/Shop';
 import Instructor from './pages/Instructor';
 import Leaderboard from './pages/Leaderboard';
 import Tutorial from './pages/Tutorial';
+import Menu from './components/Menu/Menu';
 
 function App() {
   return (
     <div className="App">
+      <Menu />
       <Router>
         <div>
           <Routes>
