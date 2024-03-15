@@ -5,7 +5,7 @@ import Play from './pages/Play';
 import Default from './pages/Default';
 import Debug from './pages/Debug';
 import Login from './pages/Login';
-import Shop from './pages/Shop';
+import Shop from './pages/Shop/Shop';
 import Instructor from './pages/Instructor';
 import Leaderboard from './pages/Leaderboard';
 import Tutorial from './pages/Tutorial';

@@ -1,0 +1,22 @@
+
+.columns {
+    display: flex;
+    flex-wrap: wrap;
+
+
+  }
+  
+  .Avatar {
+    background-color: blue;
+    width: 50%;
+    /* grid-template-columns: 1fr 1fr; Remove this line */
+  }
+  
+  .Bin {
+    background-color: red;
+    width: 50%;
+    /* grid-template-columns: 1fr 1fr; Remove this line */
+  }
+  .heading {
+    background-color: green;
+  }
