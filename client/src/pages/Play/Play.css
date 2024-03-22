@@ -1,0 +1,62 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.header-star {
+    width: 40pt;
+}
+
+.header-pause {
+    width: 30pt;
+    height: 30pt;
+}
+
+.logo {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.conveyor-belt {
+    background-color: #808080;
+    height: 18vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-bottom: 5pt;
+}
+
+.conveyor-belt p {
+    color: #c4c4c4;
+}
+
+.bin {
+    width: 20vh;
+    transition: transform 0.3s ease;
+}
+
+.bin:hover {
+    transform: scale(1.05);
+}
+
+.wizard {
+    height: 40vh;
+    position: fixed; 
+    right: 0;
+    bottom: 0;
+}
+
+.bin-bar {
+    display: flex;
+    justify-content: space-around;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.draggable {
+    z-index: 999;
+    width: 5%;
+}

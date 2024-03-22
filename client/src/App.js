@@ -1,7 +1,7 @@
 import './App.css';
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Play from './pages/Play';
+import Play from './pages/Play/Play';
 import Default from './pages/Default';
 import Debug from './pages/Debug';
 import Login from './pages/Login';
