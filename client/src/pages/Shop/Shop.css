@@ -1,22 +1,117 @@
+.Main {
+  font-family: Arial, sans-serif;
+}
 
 .columns {
-    display: flex;
-    flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+  padding: 5px
+}
+
+.Avatar {
+  display: grid; 
+  grid-template-columns: 1fr; 
+  align-items: flex-start; 
+  position: relative;
+  min-height: 300px; 
+}
+
+.Bin 
+{
+  display: grid; 
+  grid-template-columns: 1fr; 
+  align-items: flex-start; 
+  position: relative;
+  min-height: 300px; 
+}
+
+.PowerUp{
+  width: 100%;
+}
+
+.Heading {
+  background-color: green;
+}
+
+.ShopOptions {
+  width: 100%; 
+  display: grid;
+  gap: 5px; 
+  padding: 5px;
+  grid-template-columns: 1fr 1fr; 
+  align-items: end; 
+}
+.ShopOptionsPowerUps{
+  width: 100%; /* Take full width of its parent */
+  display: grid;
+  justify-content: space-evenly;
+  grid-template-columns: 480px 480px 435px;
+  padding: 5px;
+  align-items: end;
+}
+.LeftShopOptionsAvatar, .RightShopOptionsAvatar, .BottemRightShopOptionsAvatar,.BottemLeftShopOptionsAvatar{
+  background-color: green; 
+  padding: 5px;
+}
+
+.RightShopOptionsAvatar,.BottemRightShopOptionsAvatar{
+  background-color: purple; /* Purple color for the right box */
+}
+
+.Avatar img, .Avatar-option-img {
+  width: 100%; /* Responsive image */
+  height: auto;
+  display: block;
+}
+
+.itemInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px; /* Adjust the padding */
+}
+
+WWButton {
+  font-weight: bold;
+  background-color: #1c0c86;
+  color: white;
+  padding: 10px 20px;
+  border: 3px solid black;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 10px;
+  cursor: pointer;
+  border-radius: 1px;
+  transition: background-color 0.3s ease;
+  box-shadow: 4px 4px 8px rgba(1, 1, 1, 1.2);
+}
+
+.WWButton:hover {
+  background-color: #d7fa0c;
+  color: black;
+}
 
 
+.Price {
+  
+}
+
+@media (max-width: 768px) {
+  .columns {
+    flex-direction: column;
+  }
+
+  .Avatar, .Bin {
+    width: 100%; 
+  }
+
+  .PowerUp {
+    grid-column: 1 / -1; 
+  }
+
+  .ShopOptions, .LeftShopOptionsAvatar, .RightShopOptionsAvatar,.BottemRightShopOptionsAvatar,.BottemLeftShopOptionsAvatar {
+    grid-column: 1; 
   }
   
-  .Avatar {
-    background-color: blue;
-    width: 50%;
-    /* grid-template-columns: 1fr 1fr; Remove this line */
-  }
-  
-  .Bin {
-    background-color: red;
-    width: 50%;
-    /* grid-template-columns: 1fr 1fr; Remove this line */
-  }
-  .heading {
-    background-color: green;
-  }
+}
