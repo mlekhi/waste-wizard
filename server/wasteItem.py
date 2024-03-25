@@ -1,4 +1,15 @@
 from wasteBin import *
+import csv
+
+def read_bins_csv():
+    bins = {}
+    with open('game-data/waste.csv', 'r') as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            bins[row['image_name']] = row['bin_type']
+    return bins
+
+bins_data = read_bins_csv()
 
 
 class WasteItem:

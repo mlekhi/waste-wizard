@@ -1,5 +1,5 @@
 from avatar import *
-
+import csv
 
 class Player:
     def __init__(self, name: str, userID: str, userPassword: str, currentAvatar: Avatar, coins: int, isTeacher: bool, isDeveloper: bool,
@@ -15,7 +15,7 @@ class Player:
         self._highScore = highScore          # Integer
         self._totalScore = totalScore        # Integer
         self._lastLevel = lastLevel          # Integer
-        self._survivalTimeRecord = survivalTimeRecord  # Integer
+        # self._survivalTimeRecord = survivalTimeRecord  # Integer
 
     def login(self, username, password):
         if username == self._userID and password == self._password:
@@ -102,6 +102,9 @@ class Player:
 
     def set_highScore(self, highScore):
         self._highScore = highScore
+
+    def update_highScore(self, highScore):
+        self._highScore += highScore
 
     # Getter and setter for lastLevel
     def get_lastLevel(self):
