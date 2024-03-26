@@ -1,3 +1,5 @@
+# lowkey do we need this? can't we just pull from the user list??
+
 class Leaderboard:
     def __init__(self, playerList):
         # this player list is always meant to be sorted by high score
