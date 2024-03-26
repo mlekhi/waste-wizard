@@ -2,12 +2,14 @@
 
 import React, { useState, useEffect } from 'react';
 import './Play.css';
+import Modal from './Modal';
 
 function Play() {
   const [draggedItem, setDraggedItem] = useState(null);
   const [score, setScore] = useState(0);
   const [strikes, setStrikes] = useState(3);
   const [fact, setFact] = useState('');
+  const [isPaused, setIsPaused] = useState(false);
   const imageVisibility = {
     bananaPeel: true,
     paper: true,
@@ -88,6 +90,19 @@ function Play() {
   const handleDragOver = (e) => {
     e.preventDefault();
   };
+
+  const handleResumeButton = () => {
+    setIsPaused(false);
+  };
+
+  const handlePauseButton = () => {
+    setIsPaused(true);
+  };
+
+  const handleQuitGame = () => {
+    console.log("Quitting game ...");
+    window.location.href = '/';
+  }
 
   const handleDrop = (e, imageName) => {
     console.log("drop handling");
@@ -176,9 +191,9 @@ function Play() {
   return (
     <div className="App">
       <div className="header">
-        <img src="pause.png" class="header-pause"></img>
+        <img src="pause.png" className="header-pause" onClick={handlePauseButton} alt="Pause Button" /> {/* Pause button */}        
         <p class="logo">Waste Wizard</p>
-        <div>
+        <div class="score-container">
           <p>Score: { score }</p>
         </div>
       </div>
@@ -228,6 +243,7 @@ function Play() {
       <div>
         <img src="portal.png" className="portal"/>
       </div>
+      <Modal isOpen={isPaused} onClose={handleResumeButton} onQuit={handleQuitGame} /> {/* Render the modal */}
     </div>
   );
 }

@@ -6,6 +6,8 @@
 .header-pause {
     width: 30pt;
     height: 30pt;
+    margin-left: 20px;
+    margin-top: 20px;
 }
 
 .logo {
@@ -70,6 +72,7 @@
     transform: translate(-50%, -50%);
     z-index: -1;  
     pointer-events: none;
+<<<<<<< HEAD
     display: flex;
 }
 
@@ -85,4 +88,15 @@
 
 .facts {
     font-size: 10pt;
+=======
+}
+
+.header-pause:hover {
+    transform: scale(1.1); /* Increase the scale on hover */
+  }
+
+.score-container{
+    margin-right: 20px;
+    font-size: 20px;
+>>>>>>> 93d244428213d5b8cd931dc062243c269ee40f4d
 }
