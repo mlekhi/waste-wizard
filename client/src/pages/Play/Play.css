@@ -65,6 +65,24 @@
 .portal {
     height: 90vh;
     position: fixed;
-    z-index: 0;  
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;  
     pointer-events: none;
+    display: flex;
+}
+
+.facts-container {
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    padding: 10pt;
+    position: fixed;
+    bottom: 45%;
+    right: 2%;
+    width: 20vh;
+}
+
+.facts {
+    font-size: 10pt;
 }

@@ -29,6 +29,14 @@ with open('game-data/facts.csv', newline='') as csvfile:
         educational_fact = EducationalFact(fact_number, fact_text)
         educational_facts.append(educational_fact)    
 
+bins_data = {}
+with open('game-data/waste.csv', newline='') as csvfile:
+    reader = csv.DictReader(csvfile)
+    for row in reader:
+        image_name = row['image_name']
+        bin_type = int(row['bin_type'])
+        bins_data[image_name] = bin_type
+
 avatars = []
 with open('game-data/avatars.csv', newline='') as csvfile:
     reader = csv.DictReader(csvfile)
@@ -40,6 +48,7 @@ with open('game-data/avatars.csv', newline='') as csvfile:
         avatars.append(avatar)
 
 player = Player()
+
 
 @app.route('/')
 def hello():
@@ -109,6 +118,15 @@ def update_score():
         return jsonify({'score': updated}), 200  # Return the updated score
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+@app.route('/get-score')
+def get_score():
+    current_score = player.get_totalScore()
+
+    if current_score is not None:
+        return jsonify({'score': current_score}), 200
+    else:
+        return jsonify({'error': 'Score not found'}), 404
 
 @app.route('/get-fact')
 def get_fact():

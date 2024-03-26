@@ -2,6 +2,7 @@ import './App.css';
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Play from './pages/Play/Play';
+import Multiplayer from './pages/Play/Multiplayer';
 import Default from './pages/Default';
 import Debug from './pages/Debug';
 import Login from './pages/Login';
@@ -20,6 +21,7 @@ function App() {
             <Route exact path="*" element={<Default />} />
             <Route exact path="/Default" element={<Default />} />
             <Route exact path="/Play" element={<Play />} />
+            <Route exact path="/Multiplayer" element={<Multiplayer />} />
             <Route exact path="/Debug" element={<Debug />} />
             <Route exact path="/Login" element={<Login />} />
             <Route exact path="/Shop" element={<Shop />} />
