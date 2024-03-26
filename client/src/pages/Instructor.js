@@ -2,8 +2,20 @@ import React from 'react';
 import './Instructor.css';
  
 function Instructor(){
+    const numberOfRows = 10;
+
+    const players = [];
+    for (let i = 1; i <= numberOfRows; i++) {
+      players.push({
+        playerName: `Player ${i}`,
+        levelsCompleted: Math.floor(Math.random() * 10), 
+        totalScore: Math.floor(Math.random() * 1000), 
+        coinsCollected: Math.floor(Math.random() * 100) 
+      });
+    }
     return(
- <><head>
+<>
+<head>
     <title>Player Data Chart</title>
 </head>
 <body>
@@ -20,44 +32,23 @@ function Instructor(){
                 </tr>
 
             <tbody>
-                <tr>
-                    <td>Player 1</td>
-                    <td>10</td>
-                    <td>100</td>
-                    <td>50</td>
-                </tr>
-                <tr>
-                    <td>Player 1</td>
-                    <td>10</td>
-                    <td>100</td>
-                    <td>60</td>
-                </tr>
-                <tr>
-                    <td>Player 1</td>
-                    <td>10</td>
-                    <td>100</td>
-                    <td>70</td>
-                </tr>
-                <tr>
-                    <td>Player 1</td>
-                    <td>10</td>
-                    <td>100</td>
-                    <td>10</td>
-                </tr>
+
+            {players.map((player, index) => (
+            <tr key={index}>
+              <td>{player.playerName}</td>
+              <td>{player.levelsCompleted}</td>
+              <td>{player.totalScore}</td>
+              <td>{player.coinsCollected}</td>
+            </tr>
+          ))}
+
+
             </tbody>
             </thread>
         </div>
     </table>
-
-
-
 </body>
-    
-    
-    
-    
-    </>
-
+</>
 );
 }
 
