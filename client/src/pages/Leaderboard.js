@@ -18,7 +18,7 @@ function Leaderboard(){
                 </tr>
                 <tbody>
                     <tr>
-                        <td>Player 1 </td>
+                        <td>Player 1</td>
                         <td>1000</td>
                     </tr>
                     <tr>
