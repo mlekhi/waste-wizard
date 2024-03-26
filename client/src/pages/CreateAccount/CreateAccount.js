@@ -3,7 +3,7 @@ import './CreateAccount.css';
 
 function CreateAccount() {
   return (
-    <div clasName="App">
+    <div className="App">
       <h1>Create an Account</h1>
       <div className="Info">
       <div className="Spacing">

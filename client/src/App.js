@@ -3,7 +3,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Play from './pages/Play';
 import Default from './pages/Default';
-import Debug from './pages/Debug';
+import Debug from './pages/Debug/Debug';
 import Login from './pages/Login';
 import Shop from './pages/Shop';
 import Instructor from './pages/Instructor';
