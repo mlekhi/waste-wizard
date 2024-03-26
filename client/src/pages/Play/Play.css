@@ -6,8 +6,8 @@
 .header-pause {
     width: 30pt;
     height: 30pt;
-    margin-left: 5px;
-    margin-top: 3px;
+    margin-left: 20px;
+    margin-top: 20px;
 }
 
 .logo {
@@ -74,3 +74,8 @@
 .header-pause:hover {
     transform: scale(1.1); /* Increase the scale on hover */
   }
+
+.score-container{
+    margin-right: 20px;
+    font-size: 20px;
+}
