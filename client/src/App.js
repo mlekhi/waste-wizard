@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Play from './pages/Play';
 import Default from './pages/Default';
 import Debug from './pages/Debug';
-import Login from './pages/Login';
+import Login from './pages/Login/Login';
 import Shop from './pages/Shop';
 import Instructor from './pages/Instructor';
 import Leaderboard from './pages/Leaderboard';
@@ -21,7 +21,7 @@ function App() {
             <Route exact path="/Default" component={Default} />
             <Route exact path="/Play" component={Play} />
             <Route exact path="/Debug" component={Debug} />
-            <Route exact path="/Login" component={Login} />
+            <Route exact path="/Login" element={<Login/>} />
             <Route exact path="/Shop" component={Shop} />
             <Route exact path="/Instructor" component={Instructor} />
             <Route exact path="/Leaderboard" component={Leaderboard} />
