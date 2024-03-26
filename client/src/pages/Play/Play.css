@@ -6,6 +6,8 @@
 .header-pause {
     width: 30pt;
     height: 30pt;
+    margin-left: 5px;
+    margin-top: 3px;
 }
 
 .logo {
@@ -68,3 +70,7 @@
     z-index: 0;  
     pointer-events: none;
 }
+
+.header-pause:hover {
+    transform: scale(1.1); /* Increase the scale on hover */
+  }
