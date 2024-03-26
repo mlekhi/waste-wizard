@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import './Play.css';
-import Modal from './Modal';
+import Modal from '../../components/Modal/Modal';
 
 function Play() {
   const [draggedItem, setDraggedItem] = useState(null);
@@ -243,7 +243,7 @@ function Play() {
       <div>
         <img src="portal.png" className="portal"/>
       </div>
-      <Modal isOpen={isPaused} onClose={handleResumeButton} onQuit={handleQuitGame} /> {/* Render the modal */}
+      <Modal isOpen={isPaused} onClose={handleResumeButton} onQuit={handleQuitGame} />
     </div>
   );
 }
