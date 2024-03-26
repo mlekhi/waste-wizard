@@ -1,0 +1,26 @@
+body{
+  text-align: center;
+  background-color: #ffffff;
+}
+
+
+button{
+  background-color: #339bc5;
+  color: #fff;
+  padding: 10px 20px;
+  margin: 5px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+h1{
+  margin-top: 40px;
+  /* transform: rotate(15deg); */
+  font-family: "Arial", sans-serif;
+  font-size: 40px;
+}
+
+video{
+  margin-top: 20px;
+}
