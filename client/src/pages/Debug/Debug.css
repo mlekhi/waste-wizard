@@ -1,0 +1,51 @@
+.Info {
+    background: rgba(0, 0, 0, 0.12);
+    border: 3px solid rgba(1, 1, 1, 1.12);
+    border-radius: 1px;
+    display: flex;
+    margin: 3em auto;
+    max-width: 80%;
+    text-align: justify;
+    height: 310px;
+    /* Alter the above */
+}
+
+.LevelBox {
+    display:flex;
+    margin: 3em auto;
+    max-width: 100%;
+    text-align: justify ; 
+    height: 110px;
+        /* Alter the above */
+}
+
+.Spacing {
+    max-width: 80%;
+    display: inline-flex;
+}
+
+.DebugButton{
+    font-weight: bold;
+    background-color: #5a39a0;
+    border-width: 3px; /* Adjust the border width as needed */
+    border-style:solid; /* Set the border style */
+    border-color: black; /* Set the border color */
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    height: 100px;
+    width: 100px;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+    box-shadow: 4px 4px 8px rgba(1, 1, 1, 1.2); /* Drop shadow */
+}
+
+.DebugButton:hover {
+    background-color: #00ff08;
+    color: black;
+  }
