@@ -13,10 +13,11 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: white;
+  background-color: #6C9344;
   padding: 20px;
   border-radius: 8px;
   z-index: 10000; 
+  color: white;
 }
 
 .buttons {

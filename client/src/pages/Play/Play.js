@@ -192,7 +192,6 @@ function Play() {
     <div className="App">
       <div className="header">
         <img src="pause.png" className="header-pause" onClick={handlePauseButton} alt="Pause Button" /> {/* Pause button */}        
-        <p class="logo">Waste Wizard</p>
         <div class="score-container">
           <p>Score: { score }</p>
         </div>
