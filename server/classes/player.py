@@ -1,4 +1,4 @@
-from avatar import *
+from classes.avatar import *
 import csv
 
 class Player:
@@ -11,7 +11,6 @@ class Player:
         self._isTeacher = None          # Boolean
         self._isDeveloper = None      # Boolean
         self._inventory = None          # Inventory Object
-        self._highScore = None          # Integer
         self._totalScore = None        # Integer
         self._lastLevel = None          # Integer
 
@@ -24,16 +23,15 @@ class Player:
                     self._name = row['name']
                     self._userID = row['userID']
                     self._userPassword = row['userPassword']
-                    self._currentAvatar = Avatar(row['AvatarPath'], int(row['AvatarID']), int(row['AvatarCost']), bool(row['Owned']))
+                    # self._currentAvatar = Avatar(row['AvatarPath'], int(row['AvatarID']), int(row['AvatarCost']), bool(row['Owned']))
                     self._coins = int(row['coins'])
                     self._isTeacher = bool(row['isTeacher'])
                     self._isDeveloper = bool(row['isDeveloper'])
                     self._inventory = row['inventory']
-                    self._highScore = int(row['highScore'])
                     self._totalScore = int(row['totalScore'])
                     self._lastLevel = int(row['lastLevel'])
-                    return True
-        return False
+                    return self
+        return None
 
     def purchaseItem(self, item, price):
         # needs to be implemented
@@ -116,18 +114,6 @@ class Player:
         self._inventory = inventory
         update_accounts_csv()
 
-    # Getter and setter for highScore
-    def get_highScore(self):
-        return self._highScore
-
-    def set_highScore(self, highScore):
-        self._highScore = highScore
-        update_accounts_csv()
-
-    def update_highScore(self, highScore):
-        self._highScore += highScore
-        update_accounts_csv()
-
     # Getter and setter for lastLevel
     def get_lastLevel(self):
         return self._lastLevel
@@ -146,7 +132,7 @@ class Player:
 
     def update_accounts_csv(self):
         with open('accounts.csv', 'a', newline='') as csvfile:
-            fieldnames = ['Name', 'UserID', 'Password', 'AvatarID', 'Coins', 'IsTeacher', 'IsDeveloper', 'Inventory', 'HighScore', 'LastLevel', 'TotalScore']
+            fieldnames = ['Name', 'UserID', 'Password', 'AvatarID', 'Coins', 'IsTeacher', 'IsDeveloper', 'Inventory', 'LastLevel', 'TotalScore']
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
             # Write the player's information to the CSV file
@@ -159,7 +145,6 @@ class Player:
                 'IsTeacher': self._isTeacher,
                 'IsDeveloper': self._isDeveloper,
                 'Inventory': self._inventory,
-                'HighScore': self._highScore,
                 'LastLevel': self._lastLevel,
                 'TotalScore': self._totalScore,
             })

@@ -1,27 +1,66 @@
 # app.py
 
 from flask import Flask, request, jsonify
-from avatar import Avatar
-from factManager import EducationalFactsManager
+from classes.wasteItem import WasteItem
+from classes.educationalFact import EducationalFact
+from classes.player import Player
+from classes.avatar import Avatar
 import csv
 import random
 
 app = Flask(__name__)
 
-# move to the backend!!!!
-def read_bins_csv():
-    bins = {}
-    with open('game-data/waste.csv', 'r') as file:
-        reader = csv.DictReader(file)
-        for row in reader:
-            bins[row['image_name']] = row['bin_type']
-    return bins
+waste_bins = [0,1,2]
+waste_items = []
+with open('game-data/waste.csv', newline='') as csvfile:
+    reader = csv.DictReader(csvfile)
+    for row in reader:
+        image_path = row['image_name']
+        bin_type = int(row['bin_type'])
+        waste_item = WasteItem(image_path, bin_type)
+        waste_items.append(waste_item)
 
-bins_data = read_bins_csv()
+educational_facts = []
+with open('game-data/facts.csv', newline='') as csvfile:
+    reader = csv.DictReader(csvfile)
+    for row in reader:
+        fact_number = int(row['factNumber'])
+        fact_text = row['factText']
+        educational_fact = EducationalFact(fact_number, fact_text)
+        educational_facts.append(educational_fact)    
+
+avatars = []
+with open('game-data/avatars.csv', newline='') as csvfile:
+    reader = csv.DictReader(csvfile)
+    for row in reader:
+        avatarID = int(row['avatarID'])
+        cost = int(row['cost'])
+        owned = row['owned'].lower() == 'true'
+        avatar = Avatar(avatarID, cost, owned)
+        avatars.append(avatar)
+
+player = Player()
 
 @app.route('/')
 def hello():
     return 'Hello, World!'
+
+@app.route('/login', methods=['POST'])
+def login():
+    try:
+        data = request.get_json()
+        username = data['username'] 
+        password = data['password'] 
+
+        loggedin_player = player.login(username, password)
+        return jsonify({'success': True}), 200
+        
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/logged')
+def test():
+    return loggedin_player.get_coins()
 
 # this needs to be moved to the backend files
 @app.route('/waste-check', methods=['POST'])
@@ -61,9 +100,10 @@ def update_score():
     try:
         data = request.get_json()
         score = data['score_update']
+        current = player.get_totalScore()
 
         # Update the player's total score
-        player.update_highScore(score)
+        player.set_totalScore(current + score)
         updated = player.get_totalScore()
 
         return jsonify({'score': updated}), 200  # Return the updated score
@@ -72,12 +112,11 @@ def update_score():
 
 @app.route('/get-fact')
 def get_fact():
-    facts_manager = EducationalFactsManager()
+    fact_number = random.randint(0, len(educational_facts)-1)
+    fact = educational_facts[fact_number]
 
-    fact_number = random.randint(1, len(facts_manager.facts))
-    fact_text = facts_manager.get_fact_by_number(fact_number)
-    if fact_text is not None:
-        return fact_text
+    if fact is not None:
+        return fact.get_text()
     else:
         return f"Fact {fact_number} not found."
 

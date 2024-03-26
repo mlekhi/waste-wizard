@@ -1,2 +1,2 @@
-userID,userPassword,name,AvatarPath,coins,isTeacher,isDeveloper,inventory,highScore,totalScore,lastLevel
-mlekhi,password,Maya Lekhi,1,500,false,false,null,40,200,1
+userID,userPassword,name,AvatarPath,coins,isTeacher,isDeveloper,inventory,totalScore,lastLevel
+mlekhi,password,Maya Lekhi,1,500,false,false,null,200,1
