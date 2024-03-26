@@ -1,16 +1,14 @@
 # app.py
 
 from flask import Flask, request, jsonify
-from player import Player
 from avatar import Avatar
+from factManager import EducationalFactsManager
 import csv
+import random
 
 app = Flask(__name__)
 
-avatar1 = Avatar("path/to/avatar/image.png", 1, 50, True)
-player = Player("Alice", "alice123", "password123", avatar1,
-                100, False, False, "inventory", 0, 1, 0, 0)
-
+# move to the backend!!!!
 def read_bins_csv():
     bins = {}
     with open('game-data/waste.csv', 'r') as file:
@@ -65,12 +63,23 @@ def update_score():
         score = data['score_update']
 
         # Update the player's total score
-        current = player.get_totalScore()
-        player.set_totalScore(current + score)
-        
-        return jsonify({'score': current + score}), 200  # Return the updated score
+        player.update_highScore(score)
+        updated = player.get_totalScore()
+
+        return jsonify({'score': updated}), 200  # Return the updated score
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+@app.route('/get-fact')
+def get_fact():
+    facts_manager = EducationalFactsManager()
+
+    fact_number = random.randint(1, len(facts_manager.facts))
+    fact_text = facts_manager.get_fact_by_number(fact_number)
+    if fact_text is not None:
+        return fact_text
+    else:
+        return f"Fact {fact_number} not found."
 
 if __name__ == '__main__':
     app.run(debug=True)

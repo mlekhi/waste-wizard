@@ -5,6 +5,30 @@ function Play() {
   const [draggedItem, setDraggedItem] = useState(null);
   const [imageVisible, setImageVisible] = useState(true);
   const [score, setScore] = useState(0);
+  const [fact, setFact] = useState('');
+
+
+  useEffect(() => {
+    const fetchFact = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/get-fact');
+        if (!response.ok) {
+          throw new Error('Failed to fetch fact');
+        }
+        const data = await response.text();
+        setFact(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchFact();
+    const interval = setInterval(() => {
+      fetchFact();
+    }, 20000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   const handleDragStart = (e, imageName) => {
     setDraggedItem(imageName);
@@ -121,6 +145,7 @@ function Play() {
           <img src="wizard.png" class="wizard"></img>
         </div>
       </div>
+      <img src="portal.png" className="portal"/>
       {imageVisible && (
         <img
           src="waste/paper.png"
@@ -131,6 +156,7 @@ function Play() {
           alt="paper"
         />
       )}
+      <p>{fact}</p>
     </div>
   );
 }

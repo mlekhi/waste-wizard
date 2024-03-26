@@ -28,6 +28,7 @@
     position: fixed; 
     right: 0;
     bottom: 0;
+    pointer-events: none;
 }
 
 .bin-bar {
@@ -41,11 +42,11 @@
 .wand {
     width: 8vh;
     height: 8vh;
+    pointer-events: none;
 }
 
 .wand-bar {
     display: flex;
-
     left: 0;
     bottom: 0;
     position: fixed;
@@ -59,4 +60,11 @@
 
 .draggable:active {
     transform: scale(1.1);
+}
+
+.portal {
+    height: 90vh;
+    position: fixed;
+    z-index: 0;  
+    pointer-events: none;
 }

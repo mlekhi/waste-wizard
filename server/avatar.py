@@ -1,9 +1,9 @@
 class Avatar:
-    def __init__(self, imagePath: str, avatarID: int, cost: int, owned: bool):
-        self._imagePath = imagePath     # string
-        self._avatarID = avatarID       # integer
-        self._cost = cost               # integer
-        self._owned = owned             # boolean
+    def __init__(self):
+        self._imagePath = None     # string
+        self._avatarID = None       # integer
+        self._cost = None               # integer
+        self._owned = None             # boolean
 
     def __repr__(self) -> str:
         return f"imagePath: {self._imagePath}, avatarID:{self._avatarID}, cost:{self._cost}, owned:{self._owned}"
@@ -31,11 +31,3 @@ class Avatar:
 
     def setIsOwned(self, owned: bool):
         self._owned = owned
-
-
-# avatar1 = Avatar("test/path/avatar", 123, 100, True)
-
-# print(avatar1.getImagePath())
-# print(avatar1.getAvatarID())
-# print(avatar1.getCost())
-# print(avatar1.isOwned())

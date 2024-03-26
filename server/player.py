@@ -2,26 +2,38 @@ from avatar import *
 import csv
 
 class Player:
-    def __init__(self, name: str, userID: str, userPassword: str, currentAvatar: Avatar, coins: int, isTeacher: bool, isDeveloper: bool,
-                 inventory: str, highScore: int, lastLevel: int, totalScore: int, survivalTimeRecord: int):
-        self._name = name                    # String
-        self._userID = userID                # String
-        self._userPassword = userPassword    # String
-        self._currentAvatar = currentAvatar  # Avatar Object
-        self._coins = coins                  # Int
-        self._isTeacher = isTeacher          # Boolean
-        self._isDeveloper = isDeveloper      # Boolean
-        self._inventory = inventory          # Inventory Object
-        self._highScore = highScore          # Integer
-        self._totalScore = totalScore        # Integer
-        self._lastLevel = lastLevel          # Integer
-        # self._survivalTimeRecord = survivalTimeRecord  # Integer
+    def __init__(self):
+        self._name = None                    # String
+        self._userID = None                  # String
+        self._userPassword = None            # String
+        self._currentAvatar = None           # Avatar Object
+        self._coins = None                  # Int
+        self._isTeacher = None          # Boolean
+        self._isDeveloper = None      # Boolean
+        self._inventory = None          # Inventory Object
+        self._highScore = None          # Integer
+        self._totalScore = None        # Integer
+        self._lastLevel = None          # Integer
 
     def login(self, username, password):
-        if username == self._userID and password == self._password:
-            return "Login successful"
-        else:
-            return "Login failed"
+        with open('game-data/accounts.csv', newline='') as csvfile:
+            reader = csv.DictReader(csvfile)
+            for row in reader:
+                if row['userID'] == username and row['userPassword'] == password:
+                    # Initialize the current Player object with the matched credentials
+                    self._name = row['name']
+                    self._userID = row['userID']
+                    self._userPassword = row['userPassword']
+                    self._currentAvatar = Avatar(row['AvatarPath'], int(row['AvatarID']), int(row['AvatarCost']), bool(row['Owned']))
+                    self._coins = int(row['coins'])
+                    self._isTeacher = bool(row['isTeacher'])
+                    self._isDeveloper = bool(row['isDeveloper'])
+                    self._inventory = row['inventory']
+                    self._highScore = int(row['highScore'])
+                    self._totalScore = int(row['totalScore'])
+                    self._lastLevel = int(row['lastLevel'])
+                    return True
+        return False
 
     def purchaseItem(self, item, price):
         # needs to be implemented
@@ -29,7 +41,7 @@ class Player:
         # add the item to the inventory object
         return True
 
-    def playerType(self):
+    def get_playerType(self):
         if self._isDeveloper == False and self._isTeacher == False:
             return "Student"
         elif self._isDeveloper == True and self._isTeacher == False:
@@ -46,6 +58,7 @@ class Player:
 
     def set_name(self, name):
         self._name = name
+        update_accounts_csv()
 
     # Getter and setter for userID
     def get_userID(self):
@@ -53,6 +66,7 @@ class Player:
 
     def set_userID(self, userID):
         self._userID = userID
+        update_accounts_csv()
 
     # Getter and setter for userPassword
     def get_userPassword(self):
@@ -60,6 +74,7 @@ class Player:
 
     def set_userPassword(self, userPassword: str):
         self._userPassword = userPassword
+        update_accounts_csv()
 
     # Getter and setter for currentAvatar
     def get_currentAvatar(self):
@@ -67,6 +82,7 @@ class Player:
 
     def set_currentAvatar(self, newAvatar: Avatar):
         self._currentAvatar = newAvatar
+        update_accounts_csv()
 
     # Getter and setter for coins
     def get_coins(self):
@@ -74,6 +90,7 @@ class Player:
 
     def set_coins(self, coins: int):
         self._coins = coins
+        update_accounts_csv()
 
     # Getter and setter for isTeacher
     def is_teacher(self):
@@ -81,6 +98,7 @@ class Player:
 
     def set_isTeacher(self, isTeacher: bool):
         self._isTeacher = isTeacher
+        update_accounts_csv()
 
     # Getter and setter for isDeveloper
     def is_developer(self):
@@ -88,6 +106,7 @@ class Player:
 
     def set_isDeveloper(self, isDeveloper: bool):
         self._isDeveloper = isDeveloper
+        update_accounts_csv()
 
     # Getter and setter for inventory
     def get_inventory(self):
@@ -95,6 +114,7 @@ class Player:
 
     def set_inventory(self, inventory):
         self._inventory = inventory
+        update_accounts_csv()
 
     # Getter and setter for highScore
     def get_highScore(self):
@@ -102,9 +122,11 @@ class Player:
 
     def set_highScore(self, highScore):
         self._highScore = highScore
+        update_accounts_csv()
 
     def update_highScore(self, highScore):
         self._highScore += highScore
+        update_accounts_csv()
 
     # Getter and setter for lastLevel
     def get_lastLevel(self):
@@ -112,6 +134,7 @@ class Player:
 
     def set_lastLevel(self, lastLevel):
         self._lastLevel = lastLevel
+        update_accounts_csv()
 
     # Getter and setter for totalScore
     def get_totalScore(self):
@@ -119,58 +142,29 @@ class Player:
 
     def set_totalScore(self, totalScore):
         self._totalScore = totalScore
+        update_accounts_csv()
 
-    # Getter and setter for survivalTimeRecord
-    def get_survivalTimeRecord(self):
-        return self._survivalTimeRecord
+    def update_accounts_csv(self):
+        with open('accounts.csv', 'a', newline='') as csvfile:
+            fieldnames = ['Name', 'UserID', 'Password', 'AvatarID', 'Coins', 'IsTeacher', 'IsDeveloper', 'Inventory', 'HighScore', 'LastLevel', 'TotalScore']
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
-    def set_survivalTimeRecord(self, survivalTimeRecord):
-        self._survivalTimeRecord = survivalTimeRecord
+            # Write the player's information to the CSV file
+            writer.writerow({
+                'Name': self._name,
+                'UserID': self._userID,
+                'Password': self._userPassword,
+                'AvatarID': self._currentAvatar._avatarID,
+                'Coins': self._coins,
+                'IsTeacher': self._isTeacher,
+                'IsDeveloper': self._isDeveloper,
+                'Inventory': self._inventory,
+                'HighScore': self._highScore,
+                'LastLevel': self._lastLevel,
+                'TotalScore': self._totalScore,
+            })
 
-
-# # Example usage:
-# avatar1 = Avatar("test/path/avatar", 123, 100, True)
-# player1 = Player("Alice", "alice123", "password123", avatar1,
-#                  100, False, False, "inventory", 0, 1, 0, 0)
-
-# # Getters
-# print(player1.get_name())
-# print(player1.get_userID())
-# print(player1.get_userPassword())
-# print(player1.get_currentAvatar())
-# print(player1.get_coins())
-# print(player1.is_teacher())
-# print(player1.is_developer())
-# print(player1.get_inventory())
-# print(player1.get_highScore())
-# print(player1.get_lastLevel())
-# print(player1.get_totalScore())
-# print(player1.get_survivalTimeRecord())
-
-# # Setters
-# player1.set_name("Bob")
-# player1.set_userID("bob123")
-# player1.set_userPassword("newpassword123")
-# # player1.set_currentAvatar("avatar2")
-# player1.set_coins(200)
-# player1.set_isTeacher(True)
-# player1.set_isDeveloper(True)
-# player1.set_inventory("new_inventory")
-# player1.set_highScore(500)
-# player1.set_lastLevel(2)
-# player1.set_totalScore(1000)
-# player1.set_survivalTimeRecord(120)
-
-# # Getters
-# print(player1.get_name())
-# print(player1.get_userID())
-# print(player1.get_userPassword())
-# print(player1.get_currentAvatar())
-# print(player1.get_coins())
-# print(player1.is_teacher())
-# print(player1.is_developer())
-# print(player1.get_inventory())
-# print(player1.get_highScore())
-# print(player1.get_lastLevel())
-# print(player1.get_totalScore())
-# print(player1.get_survivalTimeRecord())
+player_instance = Player()
+player = player_instance.login("mlekhi", "password")
+if player:
+    print("Login successful")

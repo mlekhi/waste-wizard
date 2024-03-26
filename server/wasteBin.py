@@ -1,7 +1,7 @@
 class WasteBin:
     def __init__(self, binType: int, imagePath: str):
-        self._binType = binType
-        self._imagePath = imagePath
+        self._binType = None
+        self._imagePath = None
 
     def getBin(self) -> int:  # return the bintype
         return self._binType
