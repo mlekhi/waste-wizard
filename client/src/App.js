@@ -9,6 +9,7 @@ import Shop from './pages/Shop';
 import Instructor from './pages/Instructor';
 import Leaderboard from './pages/Leaderboard';
 import Tutorial from './pages/Tutorial';
+import CreateAccount from './pages/CreateAccount/CreateAccount';
 import Menu from './components/Menu/Menu';
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
             <Route exact path="/Instructor" element={<Instructor />} />
             <Route exact path="/Leaderboard" element={<Leaderboard />} />
             <Route exact path="/Tutorial" element={<Tutorial />} />
+            <Route eaxct path="/CreateAccount" element={<CreateAccount />} />
           </Routes>
         </div>
       </Router>
