@@ -1,10 +1,77 @@
-a {
-    padding: 1rem; 
-    transition: padding 0.3s ease, font-size 0.3s ease; 
-    text-decoration: none;
+.folders {
+    background: #6C9344;
+    padding: 10px;
+  }
+  
+  .tabs {
+    text-align: center;
+  }
+
+  .tabs:after {
+    content: "";
+    clear: both;
+    display: block;
+  }
+  
+  .tab {
+    display: inline-block;
+    line-height: 40px;
+    width: 100px;
+    background: #393317;
+    border-radius: 16px;
+    position: relative;
+    margin-right: 17.5px;
+  }
+  
+  .tab.active {
+    z-index: 100;
+    background: #fff;
+  }
+
+  .tab.active a {
+    color: #393317;
+  }
+  
+  .tab:after {
+    content: "";
+    display: block;
+     position: absolute;
+    border-top: 35px solid transparent;
+    bottom: 0;
+  }
+
+.coin {
+    width: 25px;
+    height: 25px;
+}
+  
+.coinbar {
+    display: flex;
+    justify-content: space-between;
+    height: 3vw;
 }
 
-a:hover {
-    font-size: 1.1em;
+.coinbar p {
+    font-size: 20pt;
+}
 
+.coinbar h1 {
+    font-size: 20pt;
+    line-height: 1;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+.logo {
+    height: 25px;
+}
+
+.bar-item {
+    display: flex;
+    align-items: center; 
+    justify-content: space-evenly;
+    width: 100pt;
 }
