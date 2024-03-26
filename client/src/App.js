@@ -26,10 +26,7 @@ function App() {
             <Route exact path="/Instructor" element={<Instructor />} />
             <Route exact path="/Leaderboard" element={<Leaderboard />} />
             <Route exact path="/Tutorial" element={<Tutorial />} />
-<<<<<<< HEAD
-=======
-            <Route eaxct path="/CreateAccount" element={<CreateAccount />} />
->>>>>>> 7d730149ddd6e8a07ae415e84801e95045632c2d
+            <Route exact path="/CreateAccount" element={<CreateAccount />} />
           </Routes>
         </div>
       </Router>
