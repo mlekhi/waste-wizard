@@ -3,22 +3,14 @@ body{
   background-color: #ffffff;
 }
 
-
 button{
-  background-color: #339bc5;
+  background-color: #89c1e1;
   color: #fff;
   padding: 10px 20px;
-  margin: 5px;
+  margin: 10px;
   border-radius: 5px;
   border: none;
   cursor: pointer;
-}
-
-h1{
-  margin-top: 40px;
-  /* transform: rotate(15deg); */
-  font-family: "Arial", sans-serif;
-  font-size: 40px;
 }
 
 video{

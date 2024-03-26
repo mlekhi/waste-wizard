@@ -8,8 +8,8 @@ import Debug from './pages/Debug/Debug';
 import Login from './pages/Login';
 import Shop from './pages/Shop';
 import Instructor from './pages/Instructor';
-import Leaderboard from './pages/Leaderboard';
-import Tutorial from './pages/Tutorial';
+import Leaderboard from './pages/Leaderboard/Leaderboard';
+import Tutorial from './pages/Tutorial/Tutorial';
 import CreateAccount from './pages/CreateAccount/CreateAccount';
 import Menu from './components/Menu/Menu';
 
