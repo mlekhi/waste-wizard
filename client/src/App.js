@@ -17,7 +17,7 @@ function App() {
     <div className="App">
       <Menu />
       <Router>
-        <div>
+        <div className="content">
           <Routes>
             <Route exact path="*" element={<Default />} />
             <Route exact path="/Default" element={<Default />} />

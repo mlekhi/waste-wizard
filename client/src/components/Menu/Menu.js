@@ -37,9 +37,6 @@ function Menu() {
           <a href="/Tutorial">Tutorial</a>
         </div>
       </div>
-      <div class="contents">
-        <div class="content"></div>
-      </div>
     </div>
   );
 }
