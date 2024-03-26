@@ -1,7 +1,7 @@
 import './App.css';
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Play from './pages/Play';
+import Play from './pages/Play/Play';
 import Default from './pages/Default';
 import Debug from './pages/Debug';
 import Login from './pages/Login';
@@ -9,11 +9,11 @@ import Shop from './pages/Shop/Shop';
 import Instructor from './pages/Instructor';
 import Leaderboard from './pages/Leaderboard';
 import Tutorial from './pages/Tutorial';
+import CreateAccount from './pages/CreateAccount/CreateAccount';
 
 function App() {
   return (
     <div className="App">
-      <p>Waste Wizard</p>
       <Router>
         <div>
           <Routes>
@@ -26,6 +26,10 @@ function App() {
             <Route exact path="/Instructor" element={<Instructor />} />
             <Route exact path="/Leaderboard" element={<Leaderboard />} />
             <Route exact path="/Tutorial" element={<Tutorial />} />
+<<<<<<< HEAD
+=======
+            <Route eaxct path="/CreateAccount" element={<CreateAccount />} />
+>>>>>>> 7d730149ddd6e8a07ae415e84801e95045632c2d
           </Routes>
         </div>
       </Router>
