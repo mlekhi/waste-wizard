@@ -189,9 +189,9 @@ function Play() {
   };
 
   return (
-    <div className="App">
+    <div className="main">
       <div className="header">
-        <img src="pause.png" className="header-pause" onClick={handlePauseButton} alt="Pause Button" /> {/* Pause button */}        
+        <img src="pause.png" className="header-pause" onClick={handlePauseButton} alt="Pause Button" />     
         <div class="score-container">
           <p>Score: { score }</p>
         </div>

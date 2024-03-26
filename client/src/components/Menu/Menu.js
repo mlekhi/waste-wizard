@@ -6,19 +6,17 @@ import './Menu.css';
 function Menu() {
   const [activeTab, setActiveTab] = useState('/Play');
   const [coins, setCoins] = useState(0); 
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const handleTabClick = (tab) => {
     setActiveTab(tab);
+    window.location.href = tab;
   };
 
   useEffect(() => {
-    // Simulate API fetch to check login status and fetch coins
-    // Replace this with your actual API fetch logic
     const fetchUserData = async () => {
       // Simulating fetching user data from an API
       try {
-        // Simulating checking if the user is logged in
-        const loggedIn = true; // Assume the user is logged in
+        const loggedIn = false; // Assume the user is logged in
         setIsLoggedIn(loggedIn);
 
         // Simulating fetching user's coins
@@ -47,26 +45,28 @@ function Menu() {
         <div className={`tab ${activeTab === '/Play' ? 'active' : ''}`} onClick={() => handleTabClick('/Play')}>
           <a href="/Play">Play</a>
         </div>
-        <div className={`tab ${activeTab === '/Leaderboard' ? 'active' : ''}`} onClick={() => handleTabClick('/Leaderboard')}>
-          <a href="/Leaderboard">Leaderboard</a>
-        </div>
         <div className={`tab ${activeTab === '/Shop' ? 'active' : ''}`} onClick={() => handleTabClick('/Shop')}>
           <a href="/Shop">Shop</a>
+        </div>
+        <div className={`tab ${activeTab === '/Leaderboard' ? 'active' : ''}`} onClick={() => handleTabClick('/Leaderboard')}>
+          <a href="/Leaderboard">Leaderboard</a>
         </div>
         <div className={`tab ${activeTab === '/Tutorial' ? 'active' : ''}`} onClick={() => handleTabClick('/Tutorial')}>
           <a href="/Tutorial">Tutorial</a>
         </div>
-        <div className={`tab ${activeTab === '/Debug' ? 'active' : ''}`} onClick={() => handleTabClick('/Debug')}>
-          <a href="/Debug">Debug</a>
-        </div>
-        <div className={`tab ${activeTab === '/Instructor' ? 'active' : ''}`} onClick={() => handleTabClick('/Instructor')}>
-          <a href="/Instructor">Instructor</a>
-        </div>
         {isLoggedIn ? (
+          <>
+            <div className={`tab ${activeTab === '/Debug' ? 'active' : ''}`} onClick={() => handleTabClick('/Debug')}>
+              <a href="/Debug">Debug</a>
+            </div>
+            <div className={`tab ${activeTab === '/Instructor' ? 'active' : ''}`} onClick={() => handleTabClick('/Instructor')}>
+              <a href="/Instructor">Instructor</a>
+            </div>
             <div className="bar-item">
               <img className="coin" src="coin.png" alt="Coins" />
               <p>{coins}</p>
             </div>
+          </>
           ) : (
             <div className={`tab ${activeTab === '/Login' ? 'active' : ''}`} onClick={() => handleTabClick('/Login')}>
               <a href="/Login">Login</a>

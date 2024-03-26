@@ -1,3 +1,7 @@
+.main {
+    padding: 5pt;
+}
+
 .header {
     display: flex;
     justify-content: space-between;
@@ -33,8 +37,8 @@
 .wizard {
     height: 40vh;
     position: fixed; 
-    right: 0;
-    bottom: 0;
+    right: 2%;
+    bottom: 2%;
     pointer-events: none;
 }
 
@@ -54,8 +58,8 @@
 
 .wand-bar {
     display: flex;
-    left: 0;
-    bottom: 0;
+    left: 2%;
+    bottom: 2%;
     position: fixed;
 }
 
@@ -81,17 +85,18 @@
 }
 
 .facts-container {
-    background-color: #f0f0f0;
+    background-color: #b1d8ef;
     border-radius: 10px;
     padding: 10pt;
     position: fixed;
     bottom: 45%;
     right: 2%;
-    width: 20vh;
+    width: 30vh;
 }
 
 .facts {
-    font-size: 10pt;
+    font-size: 11pt;
+    color: white;
 }
 
 .score-container {

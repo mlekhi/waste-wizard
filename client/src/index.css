@@ -1,6 +1,7 @@
 body {
   margin: 0;
-  font-family: "Dangrek", sans-serif;
+  font-family: "Varela Round", sans-serif;
+  font-weight: bold;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow: hidden;
@@ -8,4 +9,11 @@ body {
 
 h1 {
   font-family: "Coiny", system-ui;
+}
+
+button {
+  font-family: "Varela Round", sans-serif;
+  font-weight: bold;
+  border: none; 
+  padding: 5pt;
 }
