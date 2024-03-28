@@ -10,7 +10,7 @@ import random
 
 app = Flask(__name__)
 
-waste_bins = [0,1,2]
+waste_bins = [0, 1, 2]
 waste_items = []
 with open('game-data/waste.csv', newline='') as csvfile:
     reader = csv.DictReader(csvfile)
@@ -27,7 +27,7 @@ with open('game-data/facts.csv', newline='') as csvfile:
         fact_number = int(row['factNumber'])
         fact_text = row['factText']
         educational_fact = EducationalFact(fact_number, fact_text)
-        educational_facts.append(educational_fact)    
+        educational_facts.append(educational_fact)
 
 bins_data = {}
 with open('game-data/waste.csv', newline='') as csvfile:
@@ -54,31 +54,46 @@ player = Player()
 def hello():
     return 'Hello, World!'
 
+
 @app.route('/login', methods=['POST'])
 def login():
     try:
         data = request.get_json()
-        username = data['username'] 
-        password = data['password'] 
+        username = data['username']
+        password = data['password']
 
         loggedin_player = player.login(username, password)
-        return jsonify({'success': True}), 200
-        
+        return jsonify({'Login Success': loggedin_player, 'Status': 200}), 200
+
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        return jsonify({'error': str(e), 'Status': 500}), 500
+
+
+@app.route('/logout', methods=['get'])
+def logout():
+    try:
+        player.set_coins(500)
+        logoutStatus = player.logout()
+        return jsonify({'Logout Success': logoutStatus, 'Status': 200}), 200
+
+    except Exception as e:
+        return jsonify({'error': str(e), 'Status': 500}), 500
+
 
 @app.route('/logged')
 def test():
     return loggedin_player.get_coins()
 
 # this needs to be moved to the backend files
+
+
 @app.route('/waste-check', methods=['POST'])
 def waste_check():
     try:
         data = request.get_json()
         image_name = data['imageName']  # Get the image name from the request
-        bin_num = data['binNum'] 
-        
+        bin_num = data['binNum']
+
         bin_type = int(bins_data.get(image_name))
 
         # Check if bin_num is equal to image_name
@@ -91,6 +106,8 @@ def waste_check():
         return jsonify({'error: bad item name': str(e)}), 500
 
 # this needs to be moved to the backend files
+
+
 @app.route('/test-waste-check', methods=['POST'])
 def test_waste_check():
     try:
@@ -103,6 +120,7 @@ def test_waste_check():
         return jsonify({'bin': bin_type}), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
 
 @app.route('/update-score', methods=['POST'])
 def update_score():
@@ -119,6 +137,7 @@ def update_score():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+
 @app.route('/get-score')
 def get_score():
     current_score = player.get_totalScore()
@@ -127,6 +146,7 @@ def get_score():
         return jsonify({'score': current_score}), 200
     else:
         return jsonify({'error': 'Score not found'}), 404
+
 
 @app.route('/get-fact')
 def get_fact():
@@ -137,6 +157,7 @@ def get_fact():
         return fact.get_text()
     else:
         return f"Fact {fact_number} not found."
+
 
 if __name__ == '__main__':
     app.run(debug=True)
