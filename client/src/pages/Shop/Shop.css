@@ -29,6 +29,10 @@
   background-color: green;
 }
 
+.Avatar-option-img{
+  width: 15vw;
+}
+
 .ShopOptions {
   width: 100%; 
   display: grid;
@@ -55,7 +59,17 @@
 }
 
 .current-avatar {
-  width: 10vw;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 30vw;
+}
+
+.current-bin {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 30vw;
 }
 
 .itemInfo {
