@@ -82,10 +82,8 @@ def logout():
 
 @app.route('/logged')
 def test():
-    return loggedin_player.get_coins()
-
-# this needs to be moved to the backend files
-
+    coins = player.get_coins()
+    return jsonify({'coins': coins})
 
 @app.route('/waste-check', methods=['POST'])
 def waste_check():
@@ -147,6 +145,14 @@ def get_score():
     else:
         return jsonify({'error': 'Score not found'}), 404
 
+@app.route('/get-level')
+def get_level():
+    current_level = player.get_lastLevel()
+
+    if current_level is not None:
+        return jsonify({'level': current_level}), 200
+    else:
+        return jsonify({'error': 'Level not found'}), 404
 
 @app.route('/get-fact')
 def get_fact():
@@ -158,6 +164,30 @@ def get_fact():
     else:
         return f"Fact {fact_number} not found."
 
+@app.route('/get-top-6')
+def leaderboard():
+    # fill in to get top 6 players from the leaderboard
+
+@app.route('/purchase-avatar')
+def purchase():
+    # fill in
+
+@app.route('/show-purchased')
+def purchased():
+    # fill in what the user has already bought so that it can be displayed on the shop page
+
+@app.route('/set-level')
+def set_level():
+    # check if player has developer status
+    # let them set according to whatever level number they choose
+    # this should be a post requet
+
+@app.route('/instructor-access')
+def instructor_access():
+    # checks if the player is an instructor
+    # returns the list of students + their information that should be displayed on the instructor dashboard
+
+# set up more for the multiplayer mode!!
 
 if __name__ == '__main__':
     app.run(debug=True)
