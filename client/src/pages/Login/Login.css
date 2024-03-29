@@ -12,8 +12,21 @@ p {
   font-weight: bold;
 }
 
+
+
 a {
   font-weight: bold;
+}
+
+.TrashBag{
+  width: 40vh;
+  float: right;
+  /* You can also add margin for better spacing */
+    margin-left: 20px;
+    position: fixed; /* Or absolute, depending on your layout needs */
+    right: 0; /* Aligns the image to the right edge of the viewport/container */
+    bottom: -3%;
+
 }
 
 .TestInfo input[type="text"] {

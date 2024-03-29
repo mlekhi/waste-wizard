@@ -24,6 +24,7 @@ function Login() {
         <a href="http://localhost:3000/CreateAccount">Don't have an account?</a>
         </div>
       </div>
+      <img src="TrashBag.png" class="TrashBag"></img>
     </div>
   );
 }
