@@ -5,21 +5,21 @@ function CreateAccount() {
   return (
     <div className="App">
       <h1>Create an Account</h1>
-      <div className="Info">
-      <div className="Spacing">
-      <div className="Input">
+      <div className="AccountInfo">
+      <div className="AccountSpacing">
+      <div className="AccountInput">
         <p>Name: </p>
         <input type="text" id="InfoBox"/>
         </div>
-        <div className="Input">
+        <div className="AccountInput">
         <p>User ID: </p>
         <input type="text" id="InfoBox"/>
         </div>
-        <div className="Input">
+        <div className="AccountInput">
         <p>Password:</p>
         <input type="text" id="InfoBox"/>
         </div>
-        <div className="Input">
+        <div className="AccountInput">
         <p>Re-type password:</p>
         <input type="text" id="InfoBox"/>
         </div>
