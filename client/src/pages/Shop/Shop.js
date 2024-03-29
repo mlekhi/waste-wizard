@@ -65,7 +65,7 @@ function Shop() {
           <div className="ShopOptions">
             
                 <div className="LeftShopOptionsAvatar">
-                  <h3>Name of Bin</h3>
+                  <h3>EcoTag Bin</h3>
                   <img className="Avatar-option-img" src="graffitiRecycling.png" alt="LeftShopOptionsAvatar" />
                   <div className="itemInfo">
                     <button className="WWButton">Equip or Buy</button>
@@ -75,7 +75,7 @@ function Shop() {
 
                 
                 <div className="RightShopOptionsAvatar">
-                  <h3>Name of Bin</h3>
+                  <h3>StickIt Bin</h3>
                   <img className="Avatar-option-img" src="stickerTrashbin.png" alt="RightShopOptionsAvatar" />
                   <div className="itemInfo">
                     <button className="WWButton">Equip or Buy</button>
@@ -84,7 +84,7 @@ function Shop() {
                 </div>
 
                 <div className="BottemRightShopOptionsAvatar">
-                  <h3>Name of Bin</h3>
+                  <h3>CompostCash Bin</h3>
                   <img className="Avatar-option-img" src="moneyCompostBin.png" alt="BottemRightShopOptionsAvatar" />
                   <div className="itemInfo">
                     <button className="WWButton">Equip or Buy</button>
@@ -93,7 +93,7 @@ function Shop() {
                 </div>
 
                 <div className="BottemLeftShopOptionsAvatar">
-                  <h3>Name of Bin</h3>
+                  <h3>Glow Bin</h3>
                   <img className="Avatar-option-img" src="lightTrashBin.png" alt="BottemLeftShopOptionsAvatar" />
                   <div className="itemInfo">
                     <button className="WWButton">Equip or Buy</button>

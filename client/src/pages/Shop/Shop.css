@@ -26,7 +26,7 @@
 }
 
 .Heading {
-  background-color: green;
+  background-color: rgb(209, 214, 219);
 }
 
 .Avatar-option-img{
@@ -50,12 +50,12 @@
   align-items: end;
 }
 .LeftShopOptionsAvatar, .RightShopOptionsAvatar, .BottemRightShopOptionsAvatar,.BottemLeftShopOptionsAvatar{
-  background-color: green; 
+  background-color: rgb(160, 210, 231); 
   padding: 5px;
 }
 
 .RightShopOptionsAvatar,.BottemRightShopOptionsAvatar{
-  background-color: purple; /* Purple color for the right box */
+  background-color: rgb(63, 164, 192); /* Purple color for the right box */
 }
 
 .current-avatar {
