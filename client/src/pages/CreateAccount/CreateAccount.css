@@ -1,4 +1,4 @@
-.Info {
+.AccountInfo {
     background: rgba(0, 0, 0, 0.12);
     border: 3px solid rgba(1, 1, 1, 1.12);
     border-radius: 1px;
@@ -13,7 +13,7 @@ p {
     font-weight: bold;
 }
 
-.Info input[type="text"] {
+.AccountInfo input[type="text"] {
     border-width: 3px; /* Adjust the border width as needed */
     border-style: solid; /* Set the border style */
     border-color: black; /* Set the border color */
@@ -22,14 +22,14 @@ p {
   }
   
 
-.Input {
+.AccountInput {
     display:flex;
     justify-content: space-between;
     padding: 5%;
     
 }
 
-.Spacing {
+.AccountSpacing {
     max-width: 90%;
 }
 

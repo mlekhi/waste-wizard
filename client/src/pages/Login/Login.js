@@ -5,13 +5,13 @@ function Login() {
   return (
     <div className="App">
       <h1>Login</h1>
-      <div className="Info">
-      <div className="Spacing">
-        <div className="Input">
+      <div className="TestInfo">
+      <div className="LoginSpacing">
+        <div className="LoginInput">
         <p>User ID: </p>
         <input type="text" id="InfoBox"/>
         </div>
-        <div className="Input">
+        <div className="LoginInput">
         <p>Password:</p>
         <input type="text" id="InfoBox"/>
         </div>
@@ -20,7 +20,7 @@ function Login() {
         <button class = "LoginButton">Login</button>
         
         </div>
-        <div className="Padding">
+        <div className="LoginPadding">
         <a href="http://localhost:3000/CreateAccount">Don't have an account?</a>
         </div>
       </div>
