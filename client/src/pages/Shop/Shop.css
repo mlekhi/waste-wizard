@@ -1,0 +1,81 @@
+.columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+  padding: 5px
+}
+
+.Avatar {
+  display: grid; 
+  grid-template-columns: 1fr; 
+  align-items: flex-start; 
+  position: relative;
+  min-height: 300px; 
+}
+
+.Bin {
+  display: grid; 
+  grid-template-columns: 1fr; 
+  align-items: flex-start; 
+  position: relative;
+  min-height: 300px; 
+}
+
+.PowerUp{
+  width: 100%;
+}
+
+.Heading {
+  background-color: green;
+}
+
+.ShopOptions {
+  width: 100%; 
+  display: grid;
+  gap: 5px; 
+  padding: 5px;
+  grid-template-columns: 1fr 1fr; 
+  align-items: end; 
+}
+.ShopOptionsPowerUps{
+  width: 100%; /* Take full width of its parent */
+  display: grid;
+  justify-content: space-evenly;
+  grid-template-columns: 480px 480px 435px;
+  padding: 5px;
+  align-items: end;
+}
+.LeftShopOptionsAvatar, .RightShopOptionsAvatar, .BottemRightShopOptionsAvatar,.BottemLeftShopOptionsAvatar{
+  background-color: green; 
+  padding: 5px;
+}
+
+.RightShopOptionsAvatar,.BottemRightShopOptionsAvatar{
+  background-color: purple; /* Purple color for the right box */
+}
+
+.current-avatar {
+  width: 10vw;
+}
+
+.itemInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px; /* Adjust the padding */
+}
+
+@media (max-width: 768px) {
+  .columns {
+    flex-direction: column;
+  }
+
+  .Avatar, .Bin {
+    width: 100%; 
+  }
+
+  .ShopOptions, .LeftShopOptionsAvatar, .RightShopOptionsAvatar,.BottemRightShopOptionsAvatar,.BottemLeftShopOptionsAvatar {
+    grid-column: 1; 
+  }
+  
+}

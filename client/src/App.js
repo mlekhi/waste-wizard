@@ -6,7 +6,7 @@ import Multiplayer from './pages/Play/Multiplayer';
 import Default from './pages/Default';
 import Debug from './pages/Debug/Debug';
 import Login from './pages/Login/Login';
-import Shop from './pages/Shop';
+import Shop from './pages/Shop/Shop';
 import Instructor from './pages/Instructor';
 import Leaderboard from './pages/Leaderboard/Leaderboard';
 import Tutorial from './pages/Tutorial/Tutorial';
@@ -30,7 +30,7 @@ function App() {
             <Route exact path="/Instructor" element={<Instructor />} />
             <Route exact path="/Leaderboard" element={<Leaderboard />} />
             <Route exact path="/Tutorial" element={<Tutorial />} />
-            <Route eaxct path="/CreateAccount" element={<CreateAccount />} />
+            <Route exact path="/CreateAccount" element={<CreateAccount />} />
           </Routes>
         </div>
       </Router>
