@@ -8,7 +8,7 @@ function Shop() {
 
         <div className="Avatar">
           <h1>Current Avatar</h1>
-          <img className="current-avatar" src="logo192.png" alt="Avatar" />
+          <img className="current-avatar" src="pileOfGarbage.png" alt="Avatar" />
 
           <div className="Heading">
             <h2>Select or buy an Avatar</h2> 
@@ -16,8 +16,8 @@ function Shop() {
           <div className="ShopOptions">
             
                 <div className="LeftShopOptionsAvatar">
-                  <h3>Name of Avatar</h3>
-                  <img className="Avatar-option-img" src="logo.png" alt="Option Avatar" />
+                  <h3>Whiskerbin Trashpaws</h3>
+                  <img className="Avatar-option-img" src="catWizard.png" alt="LeftShopOptionsAvatar" />
                   <div className="itemInfo">
                     <button className="WWButton">Equip or Buy</button>
                     <div className="Price"><p>Price</p></div>
@@ -26,8 +26,8 @@ function Shop() {
 
                 
                 <div className="RightShopOptionsAvatar">
-                  <h3>Name of Avatar</h3>
-                  <img className="Avatar-option-img" src="logo.png" alt="Option Avatar" />
+                  <h3>Flexgar Dumpstrong</h3>
+                  <img className="Avatar-option-img" src="strongWizard.png" alt="RightShopOptionsAvatar" />
                   <div className="itemInfo">
                     <button className="WWButton">Equip or Buy</button>
                     <div className="Price"><p>Price</p></div>
@@ -35,8 +35,8 @@ function Shop() {
                 </div>
 
                 <div className="BottemRightShopOptionsAvatar">
-                  <h3>Name of Avatar</h3>
-                  <img className="Avatar-option-img" src="logo.png" alt="Option Avatar" />
+                  <h3>Bulbous Rubbishrouse</h3>
+                  <img className="Avatar-option-img" src="fatWizard.png" alt="BottemRightShopOptionsAvatar" />
                   <div className="itemInfo">
                     <button className="WWButton">Equip or Buy</button>
                     <div className="Price"><p>Price</p></div>
@@ -44,8 +44,8 @@ function Shop() {
                 </div>
 
                 <div className="BottemLeftShopOptionsAvatar">
-                  <h3>Name of Avatar</h3>
-                  <img className="Avatar-option-img" src="logo.png" alt="Option Avatar" />
+                  <h3>Grimmidge Filthcast</h3>
+                  <img className="Avatar-option-img" src="niceWizard.png" alt="BottemLeftShopOptionsAvatar" />
                   <div className="itemInfo">
                     <button className="WWButton">Equip or Buy</button>
                     <div className="Price"><p>Price</p></div>
@@ -58,15 +58,15 @@ function Shop() {
 
         <div className="Bin">
           <h1>Current Bin</h1>
-          <img className="current-avatar" src="logo192.png" alt="Avatar" />
+          <img className="current-bin" src="pileOfGarbage.png" alt="Bin" />
           <div className="Heading">
             <h2>Select or buy an Bin</h2> 
           </div>
           <div className="ShopOptions">
             
                 <div className="LeftShopOptionsAvatar">
-                  <h3>Name of Bin</h3>
-                  <img className="Avatar-option-img" src="logo.png" alt="Option Avatar" />
+                  <h3>EcoTag Bin</h3>
+                  <img className="Avatar-option-img" src="graffitiRecycling.png" alt="LeftShopOptionsAvatar" />
                   <div className="itemInfo">
                     <button className="WWButton">Equip or Buy</button>
                     <div className="Price"><p>Price</p></div>
@@ -75,8 +75,8 @@ function Shop() {
 
                 
                 <div className="RightShopOptionsAvatar">
-                  <h3>Name of Bin</h3>
-                  <img className="Avatar-option-img" src="logo.png" alt="Option Avatar" />
+                  <h3>StickIt Bin</h3>
+                  <img className="Avatar-option-img" src="stickerTrashbin.png" alt="RightShopOptionsAvatar" />
                   <div className="itemInfo">
                     <button className="WWButton">Equip or Buy</button>
                     <div className="Price"><p>Price</p></div>
@@ -84,8 +84,8 @@ function Shop() {
                 </div>
 
                 <div className="BottemRightShopOptionsAvatar">
-                  <h3>Name of Bin</h3>
-                  <img className="Avatar-option-img" src="logo.png" alt="Option Avatar" />
+                  <h3>CompostCash Bin</h3>
+                  <img className="Avatar-option-img" src="moneyCompostBin.png" alt="BottemRightShopOptionsAvatar" />
                   <div className="itemInfo">
                     <button className="WWButton">Equip or Buy</button>
                     <div className="Price"><p>Price</p></div>
@@ -93,8 +93,8 @@ function Shop() {
                 </div>
 
                 <div className="BottemLeftShopOptionsAvatar">
-                  <h3>Name of Bin</h3>
-                  <img className="Avatar-option-img" src="logo.png" alt="Option Avatar" />
+                  <h3>Glow Bin</h3>
+                  <img className="Avatar-option-img" src="lightTrashBin.png" alt="BottemLeftShopOptionsAvatar" />
                   <div className="itemInfo">
                     <button className="WWButton">Equip or Buy</button>
                     <div className="Price"><p>Price</p></div>

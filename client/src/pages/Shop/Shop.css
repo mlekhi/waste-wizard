@@ -26,7 +26,11 @@
 }
 
 .Heading {
-  background-color: green;
+  background-color: rgb(209, 214, 219);
+}
+
+.Avatar-option-img{
+  width: 15vw;
 }
 
 .ShopOptions {
@@ -46,16 +50,26 @@
   align-items: end;
 }
 .LeftShopOptionsAvatar, .RightShopOptionsAvatar, .BottemRightShopOptionsAvatar,.BottemLeftShopOptionsAvatar{
-  background-color: green; 
+  background-color: rgb(160, 210, 231); 
   padding: 5px;
 }
 
 .RightShopOptionsAvatar,.BottemRightShopOptionsAvatar{
-  background-color: purple; /* Purple color for the right box */
+  background-color: rgb(63, 164, 192); /* Purple color for the right box */
 }
 
 .current-avatar {
-  width: 10vw;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 30vw;
+}
+
+.current-bin {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 30vw;
 }
 
 .itemInfo {
