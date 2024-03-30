@@ -7,6 +7,7 @@ import Modal from '../../components/Modal/Modal';
 function Play() {
   const [draggedItem, setDraggedItem] = useState(null);
   const [score, setScore] = useState(0);
+  const [level, setLevel] = useState(0);
   const [strikes, setStrikes] = useState(3);
   const [fact, setFact] = useState('');
   const [isPaused, setIsPaused] = useState(false);
@@ -44,8 +45,22 @@ function Play() {
         console.error(error);
       }
     };
+
+    const fetchLevel = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/get-level');
+        if (!response.ok) {
+          throw new Error('Failed to fetch level');
+        }
+        const data = await response.json();
+        setLevel(data.score);
+      } catch (error) {
+        console.error(error);
+      }
+    };
   
     fetchScore();
+    fetchLevel();
   }, []); // Empty dependency array to run only once on component mount
   
   function setImageVisibility(imageName, isVisible) {
@@ -194,6 +209,7 @@ function Play() {
         <img src="pause.png" className="header-pause" onClick={handlePauseButton} alt="Pause Button" />     
         <div class="score-container">
           <p>Score: { score }</p>
+          <p>Level: { level }</p>
         </div>
       </div>
       <div className="gameplay">
