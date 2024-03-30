@@ -4,11 +4,15 @@ import React, { useState, useEffect } from 'react';
 import './Menu.css';
 
 function Menu() {
-  const [activeTab, setActiveTab] = useState('/Play');
+  const [activeTab, setActiveTab] = useState(() => {
+    return localStorage.getItem('activeTab') || '/Play';
+  });
   const [coins, setCoins] = useState(0); 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  
   const handleTabClick = (tab) => {
     setActiveTab(tab);
+    localStorage.setItem('activeTab', tab); 
     window.location.href = tab;
   };
 
@@ -37,10 +41,10 @@ function Menu() {
   };
 
   return (
-    <div class="tabs">
-      <div class="coinbar">
-        <div class="bar-item">
-          <img class="bar-logo" src="logo192.png"/>
+    <div className="tabs">
+      <div className="coinbar">
+        <div className="bar-item">
+          <img className="bar-logo" src="logo192.png"/>
         </div>
         <div className={`tab ${activeTab === '/Play' ? 'active' : ''}`} onClick={() => handleTabClick('/Play')}>
           <a href="/Play">Play</a>
