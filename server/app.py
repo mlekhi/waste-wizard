@@ -167,25 +167,47 @@ def get_fact():
 @app.route('/get-top-6')
 def leaderboard():
     # fill in to get top 6 players from the leaderboard
+    top_players = {}
+    with open('game-data/accounts.csv', newline='') as csvfile:
+            for row in reader:
+                if 'userID' not in row:
+                    continue  # Skip rows without 'userID'
+                player_id = row['userID']
+                total_score = int(row['totalScore'])
+                if total_score:
+                    if total_score not in top_players:
+                        top_players[total_score] = []  # Initialize list if score not already in dictionary
+                    top_players[total_score].append(player_id)  # Append player ID to list
+    
+    # Sort the top players by score in descending order
+    sorted_scores = sorted(top_players.keys(), reverse=True)
+    top_players_sorted = {score: top_players[score] for score in sorted_scores[:6]}  # Select top 6 scores
+    
+    # Return the dictionary of top players indexed by score
+    return jsonify({'top_players': top_players_sorted})
 
 @app.route('/purchase-avatar')
 def purchase():
     # fill in
+    return 0
 
 @app.route('/show-purchased')
 def purchased():
     # fill in what the user has already bought so that it can be displayed on the shop page
+    return 0
 
 @app.route('/set-level')
 def set_level():
     # check if player has developer status
     # let them set according to whatever level number they choose
     # this should be a post requet
+    return 0
 
 @app.route('/instructor-access')
 def instructor_access():
     # checks if the player is an instructor
     # returns the list of students + their information that should be displayed on the instructor dashboard
+    return 0
 
 # set up more for the multiplayer mode!!
 
