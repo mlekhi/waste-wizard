@@ -7,6 +7,8 @@ function Menu() {
   const [activeTab, setActiveTab] = useState('/Play');
   const [coins, setCoins] = useState(0); 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isInstructor, setIsInstructor] = useState(false);
+  const [isDeveloper, setIsDeveloper] = useState(false);
   const handleTabClick = (tab) => {
     setActiveTab(tab);
     window.location.href = tab;
@@ -14,13 +16,31 @@ function Menu() {
 
   useEffect(() => {
     const fetchUserData = async () => {
-      // Simulating fetching user data from an API
       try {
-        const loggedIn = false; // Assume the user is logged in
-        setIsLoggedIn(loggedIn);
+        const response = await fetch('http://localhost:5000/logged');
+        if (!response.ok) {
+          throw new Error('Failed to check login status');
+        }
+        const data = await response.json();
+        setIsLoggedIn(false);
 
-        // Simulating fetching user's coins
-        const coinsData = await fetchCoins(); // Replace fetchCoins with your actual fetch function
+        const responseInstructor = await fetch('http://localhost:5000/instructor');
+        if (!responseInstructor.ok) {
+          throw new Error('Failed to check instructor status');
+        }
+        const dataInstructor = await responseInstructor.json();
+        setIsInstructor(dataInstructor.is_instructor);
+  
+        // Fetch user role as developer
+        const responseDeveloper = await fetch('http://localhost:5000/developer');
+        if (!responseDeveloper.ok) {
+          throw new Error('Failed to check developer status');
+        }
+        const dataDeveloper = await responseDeveloper.json();
+        setIsDeveloper(dataDeveloper.is_developer);
+
+        
+        const coinsData = await fetchCoins();
         setCoins(coinsData);
       } catch (error) {
         console.error('Error fetching user data:', error);
@@ -29,6 +49,21 @@ function Menu() {
 
     fetchUserData();
   }, []);
+  
+  const handleLogout = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/logout', {
+        method: 'GET',
+      });
+      if (!response.ok) {
+        throw new Error('Failed to logout');
+      }
+      setIsLoggedIn(false);
+      console.log('Logout Success');
+    } catch (error) {
+      console.error('Logout Error:', error.message);
+    }
+  };
 
   const fetchCoins = async () => {
     // Simulate fetching coins from an API
@@ -56,11 +91,18 @@ function Menu() {
         </div>
         {isLoggedIn ? (
           <>
-            <div className={`tab ${activeTab === '/Debug' ? 'active' : ''}`} onClick={() => handleTabClick('/Debug')}>
-              <a href="/Debug">Debug</a>
-            </div>
-            <div className={`tab ${activeTab === '/Instructor' ? 'active' : ''}`} onClick={() => handleTabClick('/Instructor')}>
-              <a href="/Instructor">Instructor</a>
+            {isDeveloper && (
+              <div className={`tab ${activeTab === '/Debug' ? 'active' : ''}`} onClick={() => handleTabClick('/Debug')}>
+                <a href="/Debug">Debug</a>
+              </div>
+            )}
+            {isInstructor && (
+              <div className={`tab ${activeTab === '/Instructor' ? 'active' : ''}`} onClick={() => handleTabClick('/Instructor')}>
+                <a href="/Instructor">Instructor</a>
+              </div>
+            )}
+            <div className="bar-item">
+              <a href="/" onClick={handleLogout}>Logout</a>
             </div>
             <div className="bar-item">
               <img className="coin" src="coin.png" alt="Coins" />

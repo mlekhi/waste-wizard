@@ -7,7 +7,7 @@ import Default from './pages/Default';
 import Debug from './pages/Debug/Debug';
 import Login from './pages/Login/Login';
 import Shop from './pages/Shop/Shop';
-import Instructor from './pages/Instructor';
+import Instructor from './pages/Instructor/Instructor';
 import Leaderboard from './pages/Leaderboard/Leaderboard';
 import Tutorial from './pages/Tutorial/Tutorial';
 import CreateAccount from './pages/CreateAccount/CreateAccount';

@@ -53,6 +53,11 @@ a {
   padding-bottom: 5%;
 }
 
+.LoginPadding a {
+  color: blue;
+  text-decoration: underline;
+}
+
 .LoginButton{
   font-weight: bold;
   background-color: #1c0c86;

@@ -71,11 +71,11 @@ def login():
         return jsonify({'error': str(e), 'Status': 500}), 500
 
 
-@app.route('/logout', methods=['get'])
+@app.route('/logout')
 def logout():
     try:
-        player.set_coins(500)
         logoutStatus = player.logout()
+        player = Player()
         return jsonify({'Logout Success': logoutStatus, 'Status': 200}), 200
 
     except Exception as e:
@@ -83,9 +83,11 @@ def logout():
 
 
 @app.route('/logged')
-def test():
-    coins = player.get_coins()
-    return jsonify({'coins': coins})
+def is_logged_in():
+    if ('player' in globals() and player is not None):
+        return jsonify({'logged_in': True}), 200
+    else:
+        return jsonify({'logged_in': False}), 200
 
 @app.route('/waste-check', methods=['POST'])
 def waste_check():
@@ -104,9 +106,6 @@ def waste_check():
 
     except Exception as e:
         return jsonify({'error: bad item name': str(e)}), 500
-
-# this needs to be moved to the backend files
-
 
 @app.route('/test-waste-check', methods=['POST'])
 def test_waste_check():
@@ -218,9 +217,34 @@ def set_level():
 
 @app.route('/instructor-access')
 def instructor_access():
-    # checks if the player is an instructor
-    # returns the list of students + their information that should be displayed on the instructor dashboard
-    return 0
+    try:
+        teacher_id = player.get_userID()
+
+        students = []
+
+        if (player.get_playerType() == "Teacher"):  # Corrected method call
+
+            with open('game-data/accounts.csv', newline='') as csvfile:
+                reader = csv.DictReader(csvfile)
+                for row in reader:
+                    print("true")
+                    if row.get('teacherID') == teacher_id:
+                        print("add")
+                        student_info = {
+                            'userID': row['userID'],
+                            'lastLevel': row['lastLevel'],
+                            'totalScore': row['totalScore'],
+                            'coins': row['coins']
+                        }
+                        students.append(student_info)
+
+        if not students:
+            return jsonify({'message': 'No students found for this teacher'}), 404
+
+        return jsonify({'students': students}), 200
+
+    except Exception as e:
+        return jsonify({'error': str(e), 'Status': 500}), 500
 
 @app.route('/get-coins')
 def get_coins():
