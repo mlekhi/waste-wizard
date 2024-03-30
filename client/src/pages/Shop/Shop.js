@@ -7,9 +7,6 @@ function Shop() {
       <div className="columns"> 
 
         <div className="Avatar">
-          <h1>Current Avatar</h1>
-          <img className="current-avatar" src="pileOfGarbage.png" alt="Avatar" />
-
           <div className="Heading">
             <h2>Select or buy an Avatar</h2> 
           </div>
@@ -57,8 +54,6 @@ function Shop() {
         </div>
 
         <div className="Bin">
-          <h1>Current Bin</h1>
-          <img className="current-bin" src="pileOfGarbage.png" alt="Bin" />
           <div className="Heading">
             <h2>Select or buy an Bin</h2> 
           </div>
