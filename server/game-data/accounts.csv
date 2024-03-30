@@ -1,16 +1,16 @@
 userID,userPassword,name,AvatarPath,coins,isTeacher,isDeveloper,inventory,totalScore,lastLevel
-mlekhi,password,Maya Lekhi,1,500,false,false,null,200,1
+mlekhi,password,Maya Lekhi,1,500,false,false,null,600,1
 msperanza,password123,Marianna,1,500,true,false,null,200,1
-mtoldo,123,Matthew Toldo,1,500,true,true,null,200,1
-,,,,,,,,,50
-,,,,,,,,,55
-,,,,,,,,,60
-,,,,,,,,,57
-,,,,,,,,,62
-,,,,,,,,,59
-,,,,,,,,,64
-,,,,,,,,,69
-,,,,,,,,,66
+mtoldo,123,Matthew Toldo,1,500,true,true,null,800,1
+rshamku,bancho,Roman Shamku,1,400,true,true,null,42069,1
+zainkhan,badtameez,Zain Khan,1,300,true,true,null,9,1
+ashamku,banchoz,Aoman Shamku,1,400,true,true,null,3000,1
+bshamku,banchoa,Boman Shamku,1,400,true,true,null,100,1
+cshamku,banchob,Coman Shamku,1,400,true,true,null,869,1
+dshamku,banchoc,Doman Shamku,1,400,true,true,null,1232,1
+eshamku,banchod,Eoman Shamku,1,400,true,true,null,80085,1
+fshamku,banchoe,Foman Shamku,1,400,true,true,null,525600,1
+gshamku,banchof,Goman Shamku,1,400,true,true,null,4311,1
 ,,,,,,,,,63
 ,,,,,,,,,68
 ,,,,,,,,,65

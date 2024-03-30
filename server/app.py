@@ -1,6 +1,7 @@
 # app.py
 
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from classes.wasteItem import WasteItem
 from classes.educationalFact import EducationalFact
 from classes.player import Player
@@ -9,6 +10,7 @@ import csv
 import random
 
 app = Flask(__name__)
+CORS(app)
 
 waste_bins = [0, 1, 2]
 waste_items = []
@@ -166,24 +168,22 @@ def get_fact():
 
 @app.route('/get-top-6')
 def leaderboard():
-    # fill in to get top 6 players from the leaderboard
     top_players = {}
     with open('game-data/accounts.csv', newline='') as csvfile:
-            for row in reader:
-                if 'userID' not in row:
-                    continue  # Skip rows without 'userID'
-                player_id = row['userID']
-                total_score = int(row['totalScore'])
-                if total_score:
-                    if total_score not in top_players:
-                        top_players[total_score] = []  # Initialize list if score not already in dictionary
-                    top_players[total_score].append(player_id)  # Append player ID to list
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            if 'userID' not in row or not row['totalScore']:
+                continue  # Skip rows without 'userID' or with empty 'totalScore'
+            player_id = row['userID']
+            total_score = int(row['totalScore'])  # Convert to int if not empty
+            if total_score:
+                if total_score not in top_players:
+                    top_players[total_score] = []
+                top_players[total_score].append(player_id)
     
-    # Sort the top players by score in descending order
-    sorted_scores = sorted(top_players.keys(), reverse=True)
-    top_players_sorted = {score: top_players[score] for score in sorted_scores[:6]}  # Select top 6 scores
+    sorted_scores = sorted(top_players.keys(), reverse=True)  # Sort scores in reverse order (highest to lowest)
+    top_players_sorted = {score: top_players[score] for score in sorted_scores[:6]}
     
-    # Return the dictionary of top players indexed by score
     return jsonify({'top_players': top_players_sorted})
 
 @app.route('/purchase-avatar')
@@ -196,12 +196,25 @@ def purchased():
     # fill in what the user has already bought so that it can be displayed on the shop page
     return 0
 
-@app.route('/set-level')
+@app.route('/set-level', methods=['POST'])
 def set_level():
     # check if player has developer status
+    data = request.get_json()
+
+    if player.is_developer:
+        level = data.get('level_set')  # Use .get() to safely access 'level_set' without KeyError
+        if level is not None and level >= 1 and level <= 10:  # Check if 'level_set' is provided in the JSON data
+            player.set_lastLevel(level)
+            return jsonify({'message': 'Level set successfully', 'level': level}), 200
+        else:
+            return jsonify({'error': 'No in-range level provided in the request'}), 400 
+    else:
+        return jsonify({'error': 'Not a Developer'}), 403
+
+
+
     # let them set according to whatever level number they choose
     # this should be a post requet
-    return 0
 
 @app.route('/instructor-access')
 def instructor_access():
@@ -209,7 +222,28 @@ def instructor_access():
     # returns the list of students + their information that should be displayed on the instructor dashboard
     return 0
 
+@app.route('/get-coins')
+def get_coins():
+    coins = player.get_coins()
+    return jsonify({'coins': coins})
+
+@app.route('/get-instructor')
+def get_instructor():
+    instr = player.is_teacher()
+    return jsonify({'instr': instr})
+
+@app.route('/get-developer')
+def get_developer():
+    dev = player.is_developer()
+    return jsonify({'dev': dev})
+
+@app.route('/get-level')
+def get_level():
+    currLevel = player.get_lastLevel()
+    return jsonify({'currLevel': currLevel})
+
 # set up more for the multiplayer mode!!
+
 
 if __name__ == '__main__':
     app.run(debug=True)
