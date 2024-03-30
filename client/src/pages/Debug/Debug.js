@@ -5,9 +5,9 @@ function Debug() {
     return (
         <div className="App">
           <h1>Debug: Level Selection</h1>
-          <div className="Info">
-          <div className="Spacing">
-            <div className="LevelBox">
+          <div className="DebugInfo">
+          <div className="DebugSpacing">
+            <div className="DebugLevelBox">
                 <div className="LevelDisplay">
                 <button class = "DebugButton">Level 1</button>
                 <button class = "DebugButton">Level 2</button>
