@@ -10,7 +10,7 @@
   grid-template-columns: 1fr; 
   align-items: flex-start; 
   position: relative;
-  min-height: 300px; 
+  min-height: 50px; 
 }
 
 .Bin {
@@ -18,7 +18,7 @@
   grid-template-columns: 1fr; 
   align-items: flex-start; 
   position: relative;
-  min-height: 300px; 
+  min-height: 50px; 
 }
 
 .PowerUp{
@@ -30,7 +30,7 @@
 }
 
 .Avatar-option-img{
-  width: 15vw;
+  width: 10.3vw;
 }
 
 .ShopOptions {
@@ -58,12 +58,6 @@
   background-color: rgb(63, 164, 192); /* Purple color for the right box */
 }
 
-.current-avatar {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 30vw;
-}
 
 .current-bin {
   display: block;

@@ -1,27 +1,32 @@
-.Info {
+.DebugInfo {
     background: rgba(0, 0, 0, 0.12);
     border: 3px solid rgba(1, 1, 1, 1.12);
     border-radius: 1px;
-    display: flex;
+    display: block;
     margin: 3em auto;
-    max-width: 80%;
+    max-width: 50%;
     text-align: justify;
     height: 310px;
     /* Alter the above */
+    
 }
 
-.LevelBox {
-    display:flex;
-    margin: 3em auto;
+.DebugLevelBox {
+    display:inline-flex;
+    margin-top: 43px;
+    margin-left: 70px;
     max-width: 100%;
-    text-align: justify ; 
+    text-align: center ; 
     height: 110px;
+    
+    
         /* Alter the above */
 }
 
-.Spacing {
-    max-width: 80%;
+.DebugSpacing {
+    max-width: 90%;
     display: inline-flex;
+    text-align: center;
 }
 
 .DebugButton{
@@ -35,7 +40,7 @@
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
+    font-size: 13px;
     margin: 4px 2px;
     height: 100px;
     width: 100px;
@@ -49,3 +54,4 @@
     background-color: #00ff08;
     color: black;
   }
+
