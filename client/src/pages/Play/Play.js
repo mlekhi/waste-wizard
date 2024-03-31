@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import './Play.css';
 import Modal from '../../components/Modal/Modal';
+import WinModal from '../../components/WinModal/WinModal';
+import LoseModal from '../../components/LoseModal/LoseModal';
 
 function Play() {
   const [draggedItem, setDraggedItem] = useState(null);
@@ -11,6 +13,8 @@ function Play() {
   const [strikes, setStrikes] = useState(3);
   const [fact, setFact] = useState('');
   const [isPaused, setIsPaused] = useState(false);
+  const [isGameOver, setIsGameOver] = useState(false);
+  const [isWin, setIsWin] = useState(false);
   const imageVisibility = {
     bananaPeel: true,
     paper: true,
@@ -118,6 +122,23 @@ function Play() {
     console.log("Quitting game ...");
     window.location.href = '/';
   }
+
+  const handleRedoLevel = () => {
+    window.location.href = '../../pages/Play/Play';
+  }
+
+  useEffect(() => {
+    const garbageLeft = Object.values(imageVisibility).some(isVisible => isVisible);
+    if(!garbageLeft){
+      setIsGameOver(true);
+      setIsWin(true);
+      setIsPaused(true);
+    }
+    if(strikes === 0){
+      setIsGameOver(true);
+      setIsPaused(true);
+    }
+  }, [strikes, imageVisibility]);
 
   const handleDrop = (e, imageName) => {
     console.log("drop handling");
@@ -259,6 +280,8 @@ function Play() {
         <img src="portal.png" className="portal"/>
       </div>
       <Modal isOpen={isPaused} onClose={handleResumeButton} onQuit={handleQuitGame} />
+      <WinModal isOpen={isGameOver && isWin} onClose={handleResumeButton} score={score} />
+      <LoseModal isOpen={isGameOver && !isWin} onClose={handleResumeButton} onRedoLevel={handleRedoLevel} onQuitGame={handleQuitGame} />
     </div>
   );
 }
