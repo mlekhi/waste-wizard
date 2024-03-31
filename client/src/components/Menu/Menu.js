@@ -1,5 +1,3 @@
-// make debug + instructor shit show up  by account type
-
 import React, { useState, useEffect } from 'react';
 import './Menu.css';
 
@@ -7,7 +5,7 @@ function Menu() {
   const [activeTab, setActiveTab] = useState(() => {
     return localStorage.getItem('activeTab') || '/Play';
   });
-  const [coins, setCoins] = useState(0); 
+  const [coins, setCoins] = useState(0);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isInstructor, setIsInstructor] = useState(false);
   const [isDeveloper, setIsDeveloper] = useState(false);
@@ -18,47 +16,9 @@ function Menu() {
     window.location.href = tab;
   };
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await fetch('http://localhost:5000/logged');
-        if (!response.ok) {
-          throw new Error('Failed to check login status');
-        }
-        const data = await response.json();
-        setIsLoggedIn(false);
-
-        const responseInstructor = await fetch('http://localhost:5000/instructor');
-        if (!responseInstructor.ok) {
-          throw new Error('Failed to check instructor status');
-        }
-        const dataInstructor = await responseInstructor.json();
-        setIsInstructor(dataInstructor.is_instructor);
-  
-        // Fetch user role as developer
-        const responseDeveloper = await fetch('http://localhost:5000/developer');
-        if (!responseDeveloper.ok) {
-          throw new Error('Failed to check developer status');
-        }
-        const dataDeveloper = await responseDeveloper.json();
-        setIsDeveloper(dataDeveloper.is_developer);
-
-        
-        const coinsData = await fetchCoins();
-        setCoins(coinsData);
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-      }
-    };
-
-    fetchUserData();
-  }, []);
-  
   const handleLogout = async () => {
     try {
-      const response = await fetch('http://localhost:5000/logout', {
-        method: 'GET',
-      });
+      const response = await fetch('http://localhost:5000/logout');
       if (!response.ok) {
         throw new Error('Failed to logout');
       }
@@ -69,12 +29,46 @@ function Menu() {
     }
   };
 
-  const fetchCoins = async () => {
-    // Simulate fetching coins from an API
-    // Replace this with your actual API fetch logic
-    return 100; // Simulated user's coins
-  };
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/logged');
+        if (!response.ok) {
+          throw new Error('Failed to check login status');
+        }
+        const data = await response.json();
+        setIsLoggedIn(true);
 
+        const responseInstructor = await fetch('http://localhost:5000/get-instructor');
+        if (!responseInstructor.ok) {
+          throw new Error('Failed to check instructor status');
+        }
+        const dataInstructor = await responseInstructor.json();
+        setIsInstructor(dataInstructor.instr);
+  
+        // Fetch user role as developer
+        const responseDeveloper = await fetch('http://localhost:5000/get-developer');
+        if (!responseDeveloper.ok) {
+          throw new Error('Failed to check developer status');
+        }
+        const dataDeveloper = await responseDeveloper.json();
+        setIsDeveloper(dataDeveloper.dev);
+
+        const coinsResponse = await fetch('http://localhost:5000/get-coins');
+        if (!coinsResponse.ok) {
+          throw new Error('Failed to fetch coins');
+        }
+        const coinsData = await coinsResponse.json();
+        setCoins(coinsData);
+
+          } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+  
   return (
     <div className="tabs">
       <div className="coinbar">
@@ -83,6 +77,9 @@ function Menu() {
         </div>
         <div className={`tab ${activeTab === '/Play' ? 'active' : ''}`} onClick={() => handleTabClick('/Play')}>
           <a href="/Play">Play</a>
+        </div>
+        <div className={`tab ${activeTab === '/Multiplayer' ? 'active' : ''}`} onClick={() => handleTabClick('/Multiplayer')}>
+          <a href="/Multiplayer">Multiplayer</a>
         </div>
         <div className={`tab ${activeTab === '/Shop' ? 'active' : ''}`} onClick={() => handleTabClick('/Shop')}>
           <a href="/Shop">Shop</a>
@@ -110,7 +107,7 @@ function Menu() {
             </div>
             <div className="bar-item">
               <img className="coin" src="coin.png" alt="Coins" />
-              <p>{coins}</p>
+              <p>{coins.coins}</p>
             </div>
           </>
           ) : (

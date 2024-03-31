@@ -57,7 +57,7 @@ function Play() {
           throw new Error('Failed to fetch level');
         }
         const data = await response.json();
-        setLevel(data.score);
+        setLevel(data.level);
       } catch (error) {
         console.error(error);
       }
@@ -124,7 +124,7 @@ function Play() {
   }
 
   const handleRedoLevel = () => {
-    window.location.href = '../../pages/Play/Play';
+    window.location.href = '/Play';
   }
 
   useEffect(() => {
