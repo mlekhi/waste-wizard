@@ -45,8 +45,8 @@ with open('game-data/avatars.csv', newline='') as csvfile:
     for row in reader:
         avatarID = int(row['avatarID'])
         cost = int(row['cost'])
-        owned = row['owned'].lower() == 'true'
-        avatar = Avatar(avatarID, cost, owned)
+        name = row['name']
+        avatar = Avatar(avatarID, cost, name)
         avatars.append(avatar)
 
 player = Player()
@@ -146,15 +146,6 @@ def get_score():
     else:
         return jsonify({'error': 'Score not found'}), 404
 
-@app.route('/get-level')
-def get_level():
-    current_level = player.get_lastLevel()
-
-    if current_level is not None:
-        return jsonify({'level': current_level}), 200
-    else:
-        return jsonify({'error': 'Level not found'}), 404
-
 @app.route('/get-fact')
 def get_fact():
     fact_number = random.randint(0, len(educational_facts)-1)
@@ -181,19 +172,15 @@ def leaderboard():
                 top_players[total_score].append(player_id)
     
     sorted_scores = sorted(top_players.keys(), reverse=True)  # Sort scores in reverse order (highest to lowest)
-    top_players_sorted = {score: top_players[score] for score in sorted_scores[:6]}
+    top_players_sorted = []
     
+    # Iterate through sorted scores and get the top 6 players for each score
+    for score in sorted_scores:
+        top_players_sorted.extend([{'player_id': player_id, 'score': score} for player_id in top_players[score]])
+        if len(top_players_sorted) >= 6:
+            break
+
     return jsonify({'top_players': top_players_sorted})
-
-@app.route('/purchase-avatar')
-def purchase():
-    # fill in
-    return 0
-
-@app.route('/show-purchased')
-def purchased():
-    # fill in what the user has already bought so that it can be displayed on the shop page
-    return 0
 
 @app.route('/set-level', methods=['POST'])
 def set_level():
@@ -209,8 +196,6 @@ def set_level():
             return jsonify({'error': 'No in-range level provided in the request'}), 400 
     else:
         return jsonify({'error': 'Not a Developer'}), 403
-
-
 
     # let them set according to whatever level number they choose
     # this should be a post requet
@@ -263,8 +248,30 @@ def get_developer():
 
 @app.route('/get-level')
 def get_level():
-    currLevel = player.get_lastLevel()
-    return jsonify({'currLevel': currLevel})
+    current_level = player.get_lastLevel()
+
+    if current_level is not None:
+        return jsonify({'level': current_level}), 200
+    else:
+        return jsonify({'error': 'Level not found'}), 404
+
+@app.route('/purchase-avatar')
+def purchase():
+    # fill in
+    return 0
+
+@app.route('/show-purchased')
+def purchased():
+    inventory = player.get_inventory()
+    return jsonify({'inventory': inventory})
+
+@app.route('/avatar-shop')
+def prices():
+    avatar_prices = []
+    for avatar in avatars:
+        avatar_prices.append([avatar.get_name(), avatar.get_cost()])
+    return jsonify(avatar_prices)
+
 
 # set up more for the multiplayer mode!!
 

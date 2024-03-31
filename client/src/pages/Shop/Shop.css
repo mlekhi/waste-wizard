@@ -1,32 +1,6 @@
-.columns {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 5px;
-  padding: 5px
-}
-
-.Avatar {
-  display: grid; 
-  grid-template-columns: 1fr; 
-  align-items: flex-start; 
-  position: relative;
-  min-height: 50px; 
-}
-
-.Bin {
-  display: grid; 
-  grid-template-columns: 1fr; 
-  align-items: flex-start; 
-  position: relative;
-  min-height: 50px; 
-}
 
 .PowerUp{
   width: 100%;
-}
-
-.Heading {
-  background-color: rgb(209, 214, 219);
 }
 
 .Avatar-option-img{
@@ -38,9 +12,10 @@
   display: grid;
   gap: 5px; 
   padding: 5px;
-  grid-template-columns: 1fr 1fr; 
+  grid-template-columns: repeat(4, 1fr); 
   align-items: end; 
 }
+
 .ShopOptionsPowerUps{
   width: 100%; /* Take full width of its parent */
   display: grid;
@@ -49,13 +24,14 @@
   padding: 5px;
   align-items: end;
 }
-.LeftShopOptionsAvatar, .RightShopOptionsAvatar, .BottemRightShopOptionsAvatar,.BottemLeftShopOptionsAvatar{
+.avatar-box-1 {
   background-color: rgb(160, 210, 231); 
   padding: 5px;
 }
 
-.RightShopOptionsAvatar,.BottemRightShopOptionsAvatar{
+.avatar-box-2 {
   background-color: rgb(63, 164, 192); /* Purple color for the right box */
+  padding: 5px;
 }
 
 

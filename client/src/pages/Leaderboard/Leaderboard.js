@@ -32,14 +32,12 @@ function Leaderboard() {
                     </tr>
                 </thead>
                 <tbody>
-                    {Object.entries(topPlayers).map(([score, playerIds]) => (
-                        playerIds.map((playerId, index) => (
+                    {topPlayers.map(({ player_id, score }, index) => (
                             <tr key={index}>
-                                <td>{playerId}</td>
+                                <td>{player_id}</td>
                                 <td>{score}</td>
                             </tr>
-                        ))
-                    ))}
+                        ))}
                 </tbody>
             </table>
         </>

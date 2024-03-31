@@ -1,5 +1,5 @@
 userID,userPassword,name,currentAvatar,coins,isTeacher,isDeveloper,inventory,totalScore,lastLevel,teacherID
-mlekhi,password,Maya Lekhi,,500,False,False,null,200,1,msperanza
-msperanza,password123,Marianna,1,500,true,false,null,200,1,null
-mtoldo,123,Matthew Toldo,1,500,true,true,null,200,1,msperanza
-Maya Lekhi,mlekhi,password,,500,False,False,null,1,205,msperanza
+mlekhi,password,Maya Lekhi,,500,FALSE,FALSE,"[0,1,2,3,4,5]",200,1,msperanza
+msperanza,password123,Marianna,1,500,TRUE,FALSE,"[0]",200,1,null
+mtoldo,123,Matthew Toldo,1,500,TRUE,TRUE,"[0]",200,1,msperanza
+Maya Lekhi,mlekhi,password,,500,FALSE,FALSE,"[0]",1,205,msperanza

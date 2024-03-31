@@ -1,9 +1,9 @@
-avatarID,cost,owned
-0,0,True
-1,100,False
-2,200,False
-3,300,False
-4,400,False
-5,500,False
-6,600,False
-7,700,False
+avatarID,cost,name
+0,0,"Default Wizard"
+1,100,"Whiskerbin Trashpaws"
+2,200,"Flexgar Dumpstrong"
+3,300,"Bulbous Rubbishrouse"
+4,400,"Grimmidge Filthcast"
+5,500,"Default Wizard"
+6,600,"Default Wizard"
+7,700,"Default Wizard"
