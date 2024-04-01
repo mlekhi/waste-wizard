@@ -14,7 +14,7 @@ function Shop() {
   useEffect(() => {
     const fetchAvatars = async () => {
       try {
-        const response = await fetch('/show-purchased');
+        const response = await fetch('http://localhost:5000/show-purchased');
         if (!response.ok) {
           throw new Error('Failed to fetch avatars');
         }
@@ -56,6 +56,27 @@ function Shop() {
 
     fetchAvatars();
   }, []);
+
+
+  const [avatarPrices, setAvatarPrices] = useState([]);
+
+  useEffect(() => {
+    const fetchPrices = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/avatar-shop');
+        if (!response.ok) {
+          throw new Error('Failed to fetch avatar prices');
+        }
+        const data = await response.json();
+        setAvatarPrices(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchPrices();
+  }, []);
+
 
   return (
     <div>

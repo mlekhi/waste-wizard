@@ -255,7 +255,7 @@ def purchased():
 def prices():
     avatar_prices = []
     for avatar in avatars:
-        avatar_prices.append([avatar.get_name(), avatar.get_cost()])
+        avatar_prices.append([avatar.get_avatarID(), avatar.get_name(), avatar.get_cost()])
     return jsonify(avatar_prices)
 
 if __name__ == '__main__':

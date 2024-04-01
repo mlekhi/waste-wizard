@@ -33,3 +33,6 @@ class Avatar:
     """
     def get_name(self):
         return self._name
+
+    def get_avatarID(self):
+        return self._avatarID
