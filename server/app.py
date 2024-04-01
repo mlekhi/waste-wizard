@@ -51,11 +51,27 @@ with open('game-data/avatars.csv', newline='') as csvfile:
 
 player = Player()
 
+"""
+Simple endpoint to confirm that  server is running
+    Returns:
+        str: A greeting message.
+"""
+
 
 @app.route('/')
 def hello():
     return 'Hello, World!'
 
+"""
+Endpoint for player login.
+
+    Parameters:
+        username str: Username of the player
+        password str: Password of the playe
+
+    Returns:
+        json:  object containing login status and HTTP status code
+"""
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -70,6 +86,12 @@ def login():
     except Exception as e:
         return jsonify({'error': str(e), 'Status': 500}), 500
 
+"""
+Endpoint to handle player logout.
+
+    Returns:
+        json:  object containing logout status and HTTP status code.
+"""
 
 @app.route('/logout')
 def logout():
@@ -81,7 +103,12 @@ def logout():
     except Exception as e:
         return jsonify({'error': str(e), 'Status': 500}), 500
 
+"""
+Check if the player is currently logged in
 
+    Returns:
+        json:  object indicating the logged-in status.
+"""
 @app.route('/logged')
 def is_logged_in():
     if ('player' in globals() and player is not None):
@@ -89,6 +116,16 @@ def is_logged_in():
     else:
         return jsonify({'logged_in': False}), 200
 
+"""
+Check if the selected waste item is placed in the correct bin.
+
+    Parameters:
+        imageName (str): Name of the image representing the waste item
+        binNum (int): Bin number where the item was placed
+
+    Returns:
+        json:  object indicating whether the item was placed correctly
+"""
 @app.route('/waste-check', methods=['POST'])
 def waste_check():
     try:
@@ -106,7 +143,16 @@ def waste_check():
 
     except Exception as e:
         return jsonify({'error: bad item name': str(e)}), 500
+    
+"""
+Update the player's score based on game activity
 
+    Parameters:
+        score_update (int): The amount to add to the player's current score
+
+    Returns:
+        json:  object with the updated score
+"""
 @app.route('/update-score', methods=['POST'])
 def update_score():
     try:
@@ -122,6 +168,11 @@ def update_score():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+"""
+Retrieve the current score of the player
+    Returns:
+        json:  object containing the player's score or an error message
+"""
 
 @app.route('/get-score')
 def get_score():
@@ -132,6 +183,12 @@ def get_score():
     else:
         return jsonify({'error': 'Score not found'}), 404
 
+"""
+Provide a random educational fact.
+
+    Returns:
+        str: A random educational fact.
+"""
 @app.route('/get-fact')
 def get_fact():
     fact_number = random.randint(0, len(educational_facts)-1)
@@ -142,6 +199,11 @@ def get_fact():
     else:
         return f"Fact {fact_number} not found."
 
+"""Retrieve the top 6 players based on their scores.
+
+    Returns:
+        json:  object containing the top 6 players and their scores.
+"""
 @app.route('/get-top-6')
 def leaderboard():
     top_players = {}
@@ -168,6 +230,14 @@ def leaderboard():
 
     return jsonify({'top_players': top_players_sorted})
 
+"""Sets the level of the player, if they have developer status.
+
+    Parameters:
+        level_set (int): The level to set for the player, must be between 1 and 10.
+
+    Returns:
+        json:  object indicating success or failure of level setting.
+"""
 @app.route('/set-level', methods=['POST'])
 def set_level():
     # check if player has developer status
@@ -185,6 +255,13 @@ def set_level():
 
     # let them set according to whatever level number they choose
     # this should be a post requet
+
+"""
+Provides access to student information for instructors
+
+    Returns:
+        json:  object containing student information or an error message
+"""
 
 @app.route('/instructor-access')
 def instructor_access():
@@ -217,21 +294,45 @@ def instructor_access():
     except Exception as e:
         return jsonify({'error': str(e), 'Status': 500}), 500
 
+"""
+Retrieve the current number of coins for the player
+
+    Returns:
+        json:  object containing the number of coins
+"""
 @app.route('/get-coins')
 def get_coins():
     coins = player.get_coins()
     return jsonify({'coins': coins})
 
+"""
+Check if the player has instructor status
+
+    Returns:
+        json:  object indicating whether the player is an instructor
+"""
 @app.route('/get-instructor')
 def get_instructor():
     instr = player.is_teacher()
     return jsonify({'instr': instr})
 
+"""
+Check if the player has developer status
+
+    Returns:
+        json:  object indicating whether the player is a developer
+"""
 @app.route('/get-developer')
 def get_developer():
     dev = player.is_developer()
     return jsonify({'dev': dev})
 
+"""
+Retrieve the current level of the player
+
+    Returns:
+        json:  object containing the current level or error message.
+"""
 @app.route('/get-level')
 def get_level():
     current_level = player.get_lastLevel()
@@ -241,16 +342,36 @@ def get_level():
     else:
         return jsonify({'error': 'Level not found'}), 404
 
+"""
+Endpoint for purchasing an avatar. 
+
+    Returns:
+        int: 
+"""
+
 @app.route('/purchase-avatar')
 def purchase():
     # fill in
     return 0
+
+"""
+Show the avatars that the player has purchased
+
+    Returns:
+        json:  object listing purchased avatars
+"""
 
 @app.route('/show-purchased')
 def purchased():
     inventory = player.get_inventory()
     return jsonify({'inventory': inventory})
 
+"""
+Retrieve the prices and names of available avatars
+
+    Returns:
+        json: object containing the names and prices of avatars
+"""
 @app.route('/avatar-shop')
 def prices():
     avatar_prices = []
