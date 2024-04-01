@@ -367,10 +367,10 @@ def purchased():
     return jsonify({'inventory': inventory})
 
 """
-Retrieve the prices and names of available avatars
+Retrieve the IDs, prices, and names of available avatars
 
     Returns:
-        json: object containing the names and prices of avatars
+        json: object containing the names, avatar IDs, and prices of avatars
 """
 @app.route('/avatar-shop')
 def prices():

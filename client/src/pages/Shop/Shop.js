@@ -88,7 +88,7 @@ function Shop() {
             
                 <div className="avatar-box-2">
                   <h3>Whiskerbin Trashpaws</h3>
-                  <img className="Avatar-option-img" src="avatars/catWizard.png" alt="LeftShopOptionsAvatar" />
+                  <img className="Avatar-option-img" src="avatars/{number}.png" alt="LeftShopOptionsAvatar" />
                   <div>
                   {avatar0 ? (
                     <div className="Owned">Owned</div>
@@ -104,7 +104,7 @@ function Shop() {
                 
                 <div className="avatar-box-1">
                   <h3>Flexgar Dumpstrong</h3>
-                  <img className="Avatar-option-img" src="avatars/strongWizard.png" alt="RightShopOptionsAvatar" />
+                  <img className="Avatar-option-img" src="avatars/{number}.png" alt="RightShopOptionsAvatar" />
                   <div>
                   {avatar1 ? (
                     <div className="Owned">Owned</div>
@@ -119,7 +119,7 @@ function Shop() {
 
                 <div className="avatar-box-2">
                   <h3>Grimmidge Filthcast</h3>
-                  <img className="Avatar-option-img" src="avatars/niceWizard.png" alt="BottemLeftShopOptionsAvatar" />
+                  <img className="Avatar-option-img" src="avatars/{number}.png" alt="BottemLeftShopOptionsAvatar" />
                   <div>
                   {avatar2 ? (
                     <div className="Owned">Owned</div>
@@ -134,7 +134,7 @@ function Shop() {
                 
                 <div className="avatar-box-1">
                   <h3>Bulbous Rubbishrouse</h3>
-                  <img className="Avatar-option-img" src="avatars/fatWizard.png" alt="BottemRightShopOptionsAvatar" />
+                  <img className="Avatar-option-img" src="avatars/{number}.png" alt="BottemRightShopOptionsAvatar" />
                   <div>
                   {avatar3 ? (
                     <div className="Owned">Owned</div>
@@ -150,7 +150,7 @@ function Shop() {
 
                 <div className="avatar-box-1">
                   <h3>Whiskerbin Trashpaws</h3>
-                  <img className="Avatar-option-img" src="avatars/catWizard.png" alt="LeftShopOptionsAvatar" />
+                  <img className="Avatar-option-img" src="avatars/{number}.png" alt="LeftShopOptionsAvatar" />
                   <div>
                   {avatar4 ? (
                     <div className="Owned">Owned</div>
@@ -166,7 +166,7 @@ function Shop() {
                 
                 <div className="avatar-box-2">
                   <h3>Flexgar Dumpstrong</h3>
-                  <img className="Avatar-option-img" src="avatars/strongWizard.png" alt="RightShopOptionsAvatar" />
+                  <img className="Avatar-option-img" src="avatars/{number}.png" alt="RightShopOptionsAvatar" />
                   <div>
                   {avatar5 ? (
                     <div className="Owned">Owned</div>
