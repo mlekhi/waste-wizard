@@ -2,29 +2,35 @@ import React from 'react';
 import './Debug.css';
 
 function Debug() {
-    return (
-        <div className="App">
-          <h1>Debug: Level Selection</h1>
-          <div className="DebugInfo">
-          <div className="DebugSpacing">
-            <div className="DebugLevelBox">
-                <div className="LevelDisplay">
-                <button class = "DebugButton">Level 1</button>
-                <button class = "DebugButton">Level 2</button>
-                <button class = "DebugButton">Level 3</button>
-                <button class = "DebugButton">Level 4</button>
-                <button class = "DebugButton">Level 5</button>
-                <button class = "DebugButton">Level 6</button>
-                <button class = "DebugButton">Level 7</button>
-                <button class = "DebugButton">Level 8</button>
-                <button class = "DebugButton">Level 9</button>
-                <button class = "DebugButton">Level 10</button>
-                </div>
-            </div>
+  const levels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+  const handleLevelButton = (level) => {
+    window.location.href = `/Play?level=${level}`;
+  };
+
+  return (
+    <div className="App">
+      <h1>Debug: Level Selection</h1>
+      <div className="DebugInfo">
+        <div className="DebugSpacing">
+          <div className="DebugLevelBox">
+            <div className="LevelDisplay">
+              {levels.map((level) => (
+                <button
+                  key={level}
+                  className="DebugButton" 
+                  onClick={() => handleLevelButton(level)}
+                >
+                  Level {level}
+                </button>
+              ))}
             </div>
           </div>
         </div>
-      );
+      </div>
+    </div>
+  );
 }
 
 export default Debug;
+

@@ -1,6 +1,7 @@
 // to do: random location generation (based on api level check), have sorted items disappear
 
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom'; // Import the useLocation hook
 import './Play.css';
 import Modal from '../../components/Modal/Modal';
 import WinModal from '../../components/WinModal/WinModal';
@@ -36,6 +37,15 @@ function Play() {
   const maxTop = window.innerHeight * 0.65; // Maximum top position (75% from the top)
   const minLeft = window.innerWidth * 0.30; // Minimum left position (25% from the left)
   const maxLeft = window.innerWidth * 0.70; // Maximum left position (75% from the left)
+
+  const location = useLocation(); // Initialize useLocation hook
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const levelFromQuery = parseInt(searchParams.get('level')) || 1; 
+    setLevel(levelFromQuery);
+  }, [location.search]); 
+
 
   useEffect(() => {
     const fetchScore = async () => {
@@ -175,18 +185,19 @@ function Play() {
     console.log("drop handling");
     e.preventDefault();
 
+
     // Get the coordinates of the drop event
     const dropX = e.clientX;
     const dropY = e.clientY;
-  
+ 
     // Get all bin elements
     const binElements = document.querySelectorAll('.bin');
-  
+ 
     // Iterate through each bin element
     binElements.forEach((binElement, index) => {
       // Get the bounding box of the bin element
       const binRect = binElement.getBoundingClientRect();
-  
+ 
       // Check if the drop occurred within the bounds of the current bin
       if (
         dropX >= binRect.left &&
@@ -220,6 +231,7 @@ function Play() {
                 },          
                 body: JSON.stringify({ score_update: 5 })
               }
+
 
               )
               .then(response => response.json())
@@ -262,6 +274,7 @@ function Play() {
         }
     });
   };
+
 
   useEffect(() => {
     const intervalId = setInterval(() => {
