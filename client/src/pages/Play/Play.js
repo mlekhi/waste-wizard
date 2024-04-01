@@ -9,6 +9,7 @@ import LoseModal from '../../components/LoseModal/LoseModal';
 
 function Play() {
   const [draggedItem, setDraggedItem] = useState(null);
+  const [avatar, setAvatar] = useState(null);
   const [score, setScore] = useState(0);
   const [level, setLevel] = useState(0);
   const [strikes, setStrikes] = useState(3);
@@ -45,6 +46,23 @@ function Play() {
     const levelFromQuery = parseInt(searchParams.get('level')) || 1; 
     setLevel(levelFromQuery);
   }, [location.search]); 
+
+  useEffect(() => {
+    const fetchAvatar = async () => {
+      try{
+          const response = await fetch('http://localhost:5000/get-avatar');
+          if(!response.ok) {
+            throw new Error('Failed to fetch avatar');
+          }
+          const data = await response.json();
+          setAvatar(data.avatar)
+        }
+        catch (error) {
+          console.error(error);
+        }
+    };
+    fetchAvatar();
+  }, []);
 
 
   useEffect(() => {
@@ -99,6 +117,19 @@ function Play() {
     }
     setImageVisibilityState(initialImageVisibility);
   };
+
+  useEffect(() => {
+    const initialImageVisibility = {};
+    for (const key in imageVisibility){
+      initialImageVisibility[key] = {
+        isVisible: true,
+        top: Math.random() * (maxTop - minTop) + minTop,
+        left: Math.random() * (maxLeft - minLeft) + minLeft,
+      };
+    }
+    setImageVisibilityState(initialImageVisibility);
+  }, []);
+
 
 
   
@@ -307,7 +338,7 @@ function Play() {
             <img src="bins/recycling.png" class="bin"></img>
             <img src="bins/compost.png" class="bin"></img>
           </div>
-          <img src="wizard.png" class="wizard"></img>
+          {avatar && <img src={`avatars/${avatar}.png`} className="avatar" alt="Avatar" />}
         </div>
       </div>
       {Object.entries(imageVisibility).map(([imageName, { isVisible, top, left}]) => (
