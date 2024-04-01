@@ -19,26 +19,29 @@ teacherID (str): A unique identifier for the teacher associated with the player 
 
 """
 
+
 class Player:
     def __init__(self):
         self._name = None                    # String
         self._userID = None                  # String
         self._userPassword = None            # String
         self._currentAvatar = None           # Avatar Object
-        self._coins = None                  # Int
+        self._coins = None                   # Int
         self._isTeacher = None          # Boolean
-        self._isDeveloper = None      # Boolean
+        self._isDeveloper = None        # Boolean
         self._inventory = None          # Inventory Object
-        self._totalScore = 0        # Integer
-        self._lastLevel = 1          # Integer
+        self._totalScore = 0            # Integer
+        self._lastLevel = 1             # Integer
         self._teacherID = None          # String
-    
+        self._isLogged = False          # Boolean
+
     """
     Appends the current player's information to a CSV file.
 
     This method updates 'game-data/accounts.csv' by appending the current state
     of the player's attributes. Each player is represented as a row in the CSV file.
     """
+
     def update_accounts_csv(self):
         with open('game-data/accounts.csv', 'a', newline='') as csvfile:
             fieldnames = ['Name', 'UserID', 'Password', 'currentAvatar', 'Coins',
@@ -50,7 +53,7 @@ class Player:
                 'UserID': self._userID,
                 'Password': self._userPassword,
                 'Name': self._name,
-                'AvatarID': self._currentAvatar,
+                'currentAvatar': self._currentAvatar,
                 'Coins': self._coins,
                 'IsTeacher': self._isTeacher,
                 'IsDeveloper': self._isDeveloper,
@@ -59,7 +62,7 @@ class Player:
                 'TotalScore': self._totalScore,
                 'TeacherID': self._teacherID,
             })
-        
+
     """
     Authenticates a player using a username and password.
 
@@ -73,8 +76,9 @@ class Player:
     This method checks the game-data/accounts.csv file for the provided username and password.
     If a match is found, it initializes the Player object with the user's data.
     """
+
     def login(self, username, password) -> bool:
-        count = 2
+        count = 0
         with open('game-data/accounts.csv', newline='') as csvfile:
             reader = csv.DictReader(csvfile)
             for row in reader:
@@ -91,26 +95,29 @@ class Player:
                     self._totalScore = int(row['totalScore'])
                     self._lastLevel = int(row['lastLevel'])
                     self._teacherID = row['teacherID']
+                    self._isLogged = True
                     return True
-                count += 1
-
-          # If the loop completes without finding a matching user, add new entry at the bottom
+                elif row['userID'] == username and row['userPassword'] != password:
+                    return False
+                else:
+                    count += 1
+                    continue
         with open('game-data/accounts.csv', 'a', newline='') as csvfile:
-            fieldnames = ['userID', 'userPassword', 'name', 'AvatarPath', 'coins',
-                          'isTeacher', 'isDeveloper', 'inventory', 'totalScore', 'lastLevel']
+            fieldnames = ['userID', 'userPassword', 'name', 'currentAvatar', 'coins',
+                          'isTeacher', 'isDeveloper', 'inventory', 'totalScore', 'lastLevel', 'teacherID']
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             writer.writerow({
                 'userID': username,
                 'userPassword': password,
                 'name': f'User{count}',
-                'AvatarPath': None,
+                'currentAvatar': None,
                 'coins': 0,
                 'isTeacher': False,
                 'isDeveloper': False,
                 'inventory': None,
                 'totalScore': 0,
                 'lastLevel': 0,
-                'teacherID': null
+                'teacherID': None
             })
         return False
 
@@ -123,6 +130,7 @@ class Player:
     Returns:
         bool: True if the update was successful, False otherwise.
     """
+
     def logout(self):
         rows = []
         updated = False
@@ -133,22 +141,23 @@ class Player:
             for row in reader:
                 if row['userID'] == self._userID and row['userPassword'] == self._userPassword:
                     # Update the row with new data
-                    row.update({'name': self._name, 'AvatarPath': self._currentAvatar, 'coins': self._coins, 'isTeacher': self._isTeacher,
+                    row.update({'name': self._name, 'currentAvatar': self._currentAvatar, 'coins': self._coins, 'isTeacher': self._isTeacher,
                                'isDeveloper': self._isDeveloper, 'inventory': self._inventory, 'totalScore': self._totalScore, 'lastLevel': self._lastLevel, 'teacherID': self._teacherID})
                     updated = True
                 rows.append(row)
 
         # Write the updated data back to the CSV file
         with open('game-data/accounts.csv', 'w', newline='') as csvfile:
-            fieldnames = ['userID', 'userPassword', 'name', 'AvatarPath', 'coins',
+            fieldnames = ['userID', 'userPassword', 'name', 'currentAvatar', 'coins',
                           # Update fieldnames as per your CSV
                           'isTeacher', 'isDeveloper', 'inventory', 'totalScore', 'lastLevel', 'teacherID']
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             writer.writeheader()
             writer.writerows(rows)
 
+        self._isLogged = False
         return updated
-       
+
     """
     Allows the player to purchase an item if they have enough coins.
 
@@ -159,18 +168,20 @@ class Player:
     Returns:
         bool: True if the purchase is successful, False otherwise.
     """
+
     def purchaseItem(self, item, price):
         # needs to be implemented
         # coins take away price
         # add the item to the inventory object
         return True
-    
+
     """
     Determines the player's type based on their attributes
 
     Returns:
         str: The type of the playe which can be "Student"  "Developer" "Teacher"  or "Admin".
     """
+
     def get_playerType(self):
         if self._isDeveloper == False and self._isTeacher == False:
             return "Student"
@@ -182,6 +193,7 @@ class Player:
             return "Admin"
 
     "Getter and setter for name"
+
     def get_name(self):
         return self._name
 
@@ -190,6 +202,7 @@ class Player:
         self.update_accounts_csv()
 
     "# Getter and setter for userID"
+
     def get_userID(self):
         return self._userID
 
@@ -198,6 +211,7 @@ class Player:
         self.update_accounts_csv()
 
     "# Getter and setter for userPassword"
+
     def get_userPassword(self):
         return self._userPassword
 
@@ -206,6 +220,7 @@ class Player:
         self.update_accounts_csv()
 
     "# Getter and setter for currentAvatar"
+
     def get_currentAvatar(self):
         return self._currentAvatar
 
@@ -214,6 +229,7 @@ class Player:
         self.update_accounts_csv()
 
     "# Getter and setter for coins"
+
     def get_coins(self):
         return self._coins
 
@@ -222,6 +238,7 @@ class Player:
         self.update_accounts_csv()
 
     "# Getter and setter for isTeacher"
+
     def is_teacher(self):
         return self._isTeacher
 
@@ -230,6 +247,7 @@ class Player:
         self.update_accounts_csv()
 
     "# Getter and setter for isDeveloper"
+
     def is_developer(self):
         return self._isDeveloper
 
@@ -238,6 +256,7 @@ class Player:
         self.update_accounts_csv()
 
     "# Getter and setter for inventory"
+
     def get_inventory(self):
         return self._inventory
 
@@ -246,6 +265,7 @@ class Player:
         self.update_accounts_csv()
 
     "# Getter and setter for lastLevel"
+
     def get_lastLevel(self):
         return self._lastLevel
 
@@ -254,6 +274,7 @@ class Player:
         self.update_accounts_csv()
 
     "# Getter and setter for totalScore"
+
     def get_totalScore(self):
         return self._totalScore
 
@@ -262,6 +283,7 @@ class Player:
         self.update_accounts_csv()
 
     "# Getter and setter for teacherID"
+
     def get_teacherID(self):
         return self._teacherID
 
