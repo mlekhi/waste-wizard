@@ -15,7 +15,7 @@ function Play() {
   const [isPaused, setIsPaused] = useState(false);
   const [isGameOver, setIsGameOver] = useState(false);
   const [isWin, setIsWin] = useState(false);
-  const imageVisibility = {
+  const [imageVisibility, setImageVisibilityState] = useState({
     bananaPeel: true,
     paper: true,
     can: true,
@@ -29,7 +29,8 @@ function Play() {
     pizzaBox: true,
     potatoPeel: true,
     takeOutContainer: true,
-  };  
+  });  
+  const [showWand, setShowWand] = useState(false);
 
   const minTop = window.innerHeight * 0.20; // Minimum top position (25% from the top)
   const maxTop = window.innerHeight * 0.65; // Maximum top position (75% from the top)
@@ -65,17 +66,47 @@ function Play() {
   
     fetchScore();
     fetchLevel();
+    setInitialImagePositions();
   }, []); // Empty dependency array to run only once on component mount
+
+  useEffect(() => {
+    if(isWin){
+      setLevel(prevLevel => prevLevel + 1);
+      setIsWin(true);
+    }
+
+
+  }, [isWin]);
+
+  const setInitialImagePositions = () => {
+    const initialImageVisibility = {};
+    for (const key in imageVisibility){
+      initialImageVisibility[key] = {
+        isVisible: true,
+        top: Math.random() * (maxTop - minTop) + minTop,
+        left: Math.random() * (maxLeft - minLeft) + minLeft,
+      };
+    }
+    setImageVisibilityState(initialImageVisibility);
+  };
+
+
   
   function setImageVisibility(imageName, isVisible) {
-    imageVisibility[imageName] = isVisible;
+    setImageVisibility(prevState => ({
+      ...prevState,
+      [imageName]: {
+        ...prevState[imageName],
+        isVisible: isVisible,
+      },
+    }));
   }  
   
   const decrementStrikes = () => {
     setStrikes(prevStrikes => prevStrikes - 1);
   };  
   const incrementStrikes = () => {
-    if (strikes <= 5) {
+    if (strikes <= 4) {
       setStrikes(prevStrikes => prevStrikes + 1);
     }
   };  
@@ -179,13 +210,18 @@ function Play() {
             if (data && data.success) {
               console.log("correct bin");
               // Update score after successful drop
+              if (Math.random() < 0.2) {
+                setShowWand(true)
+              }
               fetch('http://localhost:5000/update-score', {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json' // Specify the content type as JSON
                 },          
                 body: JSON.stringify({ score_update: 5 })
-              })
+              }
+
+              )
               .then(response => response.json())
               .then(data => {
                 if (data) {
@@ -199,6 +235,9 @@ function Play() {
               });
             } else {
               console.log("wrong bin");
+              if (Math.random() < 0.2) {
+                setShowWand(true)
+              }
               fetch('http://localhost:5000/update-score', {
                 method: 'POST',
                 headers: {
@@ -224,6 +263,16 @@ function Play() {
     });
   };
 
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setInitialImagePositions();
+    }, 10000 - level * 500);
+
+    return () => clearInterval(intervalId);
+  }, [level]);
+
+
+
   return (
     <div className="main">
       <div className="header">
@@ -248,7 +297,7 @@ function Play() {
           <img src="wizard.png" class="wizard"></img>
         </div>
       </div>
-      {Object.entries(imageVisibility).map(([imageName, isVisible]) => (
+      {Object.entries(imageVisibility).map(([imageName, { isVisible, top, left}]) => (
         isVisible && (
           <img
             key={imageName} // Add a unique key for each image
@@ -256,8 +305,8 @@ function Play() {
             className="draggable"
             style={{
               position: 'absolute',
-              top: `${Math.random() * (maxTop - minTop) + minTop}px`, // Generate random top position 
-              left: `${Math.random() * (maxLeft - minLeft) + minLeft}px`, // Generate random left position
+              top: `${top}px`,
+              left: `${left}px`,
             }}      
             onDragStart={(e) => handleDragStart(e, imageName)}
             onDragEnd={(e) => handleDrop(e, imageName)}
