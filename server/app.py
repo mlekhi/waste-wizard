@@ -393,14 +393,56 @@ def get_level():
 Endpoint for purchasing an avatar. 
 
     Returns:
+        json: status code indicating success or failure of the purchase.
+"""
+@app.route('/purchase-avatar', methods=['POST'])
+def purchase():
+    data = request.get_json()
+    avatarID = data['avatarID']
+    
+    avatar_cost = avatars[avatarID].get_cost()
+    player_coins = player.get_coins()
+    
+    if player_coins is None:
+        raise ValueError("Player coins are None.")
+    
+    new_player_coins = player_coins - avatar_cost
+    
+    player.set_coins(new_player_coins)
+    player.add_inventory(avatarID)
+    
+    return jsonify({'message': 'Avatar purchased successfully', 'status': 'success'}), 200
+    
+    
+"""
+Endpoint for equipped a purchased avatar. 
+
+    Returns:
         int: 
 """
+@app.route('/equip-avatar', methods=['POST'])
+def equip():
+    try:
+        data = request.get_json()
+        avatarID = data['avatarID']
+        
+        player.set_currentAvatar(avatarID)
+        
+        return jsonify({'message': 'Avatar equipped successfully', 'status': 'success'}), 200
+    
+    except Exception as e:
+        return jsonify({'error': str(e), 'status': 'error'}), 500
 
+"""
+Show the current equipped avatar. 
 
-@app.route('/purchase-avatar')
-def purchase():
-    # fill in
-    return 0
+    Returns:
+        int: integer representing the current avatar that the player has equipped
+"""
+@app.route('/current-avatar')
+def current_avatar():
+    avatar = player.get_currentAvatar()
+    return jsonify({'avatar': avatar})
 
 
 """
@@ -429,8 +471,11 @@ Retrieve the IDs, prices, and names of available avatars
 def prices():
     avatar_prices = []
     for avatar in avatars:
-        avatar_prices.append(
-            [avatar.get_avatarID(), avatar.get_name(), avatar.get_cost()])
+        avatar_prices.append({
+            'avatarID': avatar.get_avatarID(),
+            'name': avatar.get_name(),
+            'cost': avatar.get_cost()
+        })
     return jsonify(avatar_prices)
 
 

@@ -87,7 +87,7 @@ class Player:
                     self._name = row['name']
                     self._userID = row['userID']
                     self._userPassword = row['userPassword']
-                    # self._currentAvatar = Avatar(row['AvatarPath'], int(row['AvatarID']), int(row['AvatarCost']), bool(row['Owned']))
+                    self._currentAvatar = Avatar(row['currentAvatar'])
                     self._coins = int(row['coins'])
                     self._isTeacher = row['isTeacher'].lower() == 'true'
                     self._isDeveloper = row['isDeveloper'].lower() == 'true'
@@ -110,14 +110,14 @@ class Player:
                 'userID': username,
                 'userPassword': password,
                 'name': f'User{count}',
-                'currentAvatar': None,
+                'AvatarPath': None,
                 'coins': 0,
                 'isTeacher': False,
                 'isDeveloper': False,
-                'inventory': None,
+                'inventory': [0],
                 'totalScore': 0,
                 'lastLevel': 0,
-                'teacherID': None
+                'teacherID': null
             })
         return False
 
@@ -258,10 +258,17 @@ class Player:
     "# Getter and setter for inventory"
 
     def get_inventory(self):
-        return self._inventory
+        return self._inventory.split(',') if self._inventory else []
 
     def set_inventory(self, inventory):
-        self._inventory = inventory
+        self._inventory = ','.join(inventory)
+        self.update_accounts_csv()
+
+    "# Adding a new avatar purchase to the inventory"
+    def add_inventory(self, avatar_index):
+        inventory = self.get_inventory()
+        inventory.append(str(avatar_index))
+        self.set_inventory(inventory)
         self.update_accounts_csv()
 
     "# Getter and setter for lastLevel"
