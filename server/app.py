@@ -107,20 +107,6 @@ def waste_check():
     except Exception as e:
         return jsonify({'error: bad item name': str(e)}), 500
 
-@app.route('/test-waste-check', methods=['POST'])
-def test_waste_check():
-    try:
-        data = request.get_json()
-        image_name = data['imageName']  # Get the image name from the request
-
-        bin_type = bins_data.get(image_name, 'General Waste Bin')
-
-        # Return the bin type as JSON response
-        return jsonify({'bin': bin_type}), 200
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
-
-
 @app.route('/update-score', methods=['POST'])
 def update_score():
     try:
@@ -271,10 +257,6 @@ def prices():
     for avatar in avatars:
         avatar_prices.append([avatar.get_name(), avatar.get_cost()])
     return jsonify(avatar_prices)
-
-
-# set up more for the multiplayer mode!!
-
 
 if __name__ == '__main__':
     app.run(debug=True)

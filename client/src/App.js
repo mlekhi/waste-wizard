@@ -21,7 +21,7 @@ function App() {
         <div className="content">
           <Routes>
             <Route exact path="*" element={<Default />} />
-            <Route exact path="/Default" element={<Default />} />
+            <Route exact path="/" element={<Default />} />
             <Route exact path="/Play" element={<Play />} />
             <Route exact path="/Multiplayer" element={<Multiplayer />} />
             <Route exact path="/Debug" element={<Debug />} />

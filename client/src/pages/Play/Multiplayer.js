@@ -1,118 +1,159 @@
 import React, { useState, useEffect } from 'react';
 import './Play.css';
-import Modal from '../../components/Modal/Modal';
-import WinModal from '../../components/WinModal/WinModal';
-import LoseModal from '../../components/LoseModal/LoseModal';
+import MultiWinModal from '../../components/MultiWinModal/MultiWinModal';
 
 function Multiplayer() {
   const [draggedItem, setDraggedItem] = useState(null);
-  const [strikes, setStrikes] = useState(3);
-  const [isGameOver, setIsGameOver] = useState(false);
+  const [winner, setWinner] = useState('');
+  const [score1, setScore1] = useState(0);
+  const [score2, setScore2] = useState(0);
   const [isWin, setIsWin] = useState(false);
-  const imageVisibility = {
-    bananaPeel: true,
-    paper: true,
-    can: true,
-    cheese: true,
-    container: true,
-    drinkCan: true,
-    glassBottle: true,
-    lettuce: true,
+  const [imageVisibility, setImageVisibility] = useState({
+    bananaPeel: false,
+    paper: false,
+    can: false,
+    cheese: false,
+    container: false,
+    drinkCan: false,
+    glassBottle: false,
+    lettuce: false,
     plasticBag: true,
-    plasticBottle: true,
-    pizzaBox: true,
-    potatoPeel: true,
-    takeOutContainer: true,
-  };  
-
-  const minTop1 = window.innerHeight * 0.20; // Minimum top position (25% from the top)
-  const maxTop1 = window.innerHeight * 0.65; // Maximum top position (75% from the top)
-  const minLeft1 = window.innerWidth * 0.10; // Minimum left position (25% from the left)
-  const maxLeft1 = window.innerWidth * 0.40; // Maximum left position (75% from the left)
-  const minTop2 = window.innerHeight * 0.20; // Minimum top position (25% from the top)
-  const maxTop2 = window.innerHeight * 0.65; // Maximum top position (75% from the top)
-  const minLeft2 = window.innerWidth * 0.60; // Minimum left position (25% from the left)
-  const maxLeft2 = window.innerWidth * 0.90; // Maximum left position (75% from the left)
-
-  function setImageVisibility(imageName, isVisible) {
-    imageVisibility[imageName] = isVisible;
-  }  
+    plasticBottle: false,
+    pizzaBox: false,
+    potatoPeel: false,
+    takeOutContainer: false,
+  });
+  const [imageVisibility2, setImageVisibility2] = useState({
+    bananaPeel: true,
+    paper: false,
+    can: false,
+    cheese: false,
+    container: false,
+    drinkCan: false,
+    glassBottle: false,
+    lettuce: false,
+    plasticBag: false,
+    plasticBottle: false,
+    pizzaBox: false,
+    potatoPeel: false,
+    takeOutContainer: false,
+  });
   
   const handleDragStart = (e, imageName) => {
     setDraggedItem(imageName);
   };
 
-  const handleDragOver = (e) => {
-    e.preventDefault();
+  const handleDropImage1 = (imageName, bin) => {
+    handleDrop(imageName, bin, setImageVisibility, setScore1);
+    console.log(imageName);
   };
 
-  const handleQuitGame = () => {
-    console.log("Quitting game ...");
-    window.location.href = '/';
-  }
-
-  const handleRedoLevel = () => {
-    window.location.href = '/Play';
-  }
+  const handleDropImage2 = (imageName, bin) => {
+    handleDrop(imageName, bin, setImageVisibility2, setScore2);
+    console.log(imageName);
+  };
 
   useEffect(() => {
-    const garbageLeft = Object.values(imageVisibility).some(isVisible => isVisible);
-    if(!garbageLeft){
-      setIsGameOver(true);
+    console.log("imageVisibility:", imageVisibility);
+    console.log("imageVisibility2:", imageVisibility2);
+    console.log("score1:", score1, "score2:", score2)
+  
+    if(score1 == 10){
       setIsWin(true);
+      setWinner("Player 1");
+    }
+    else if (score2 == 10) {
+      setIsWin(true);
+      setWinner("Player 2");
     }
   }, [imageVisibility]);
 
-  const handleDrop = (e, imageName) => {
-    console.log("drop handling");
-    e.preventDefault();
-
-    // Get the coordinates of the drop event
-    const dropX = e.clientX;
-    const dropY = e.clientY;
-  
-    // Get all bin elements
-    const binElements = document.querySelectorAll('.bin');
-  
-    // Iterate through each bin element
-    binElements.forEach((binElement, index) => {
-      // Get the bounding box of the bin element
-      const binRect = binElement.getBoundingClientRect();
-  
-      // Check if the drop occurred within the bounds of the current bin
-      if (
-        dropX >= binRect.left &&
-        dropX <= binRect.right &&
-        dropY >= binRect.top &&
-        dropY <= binRect.bottom
-        ) {
-          // If the drop occurred within the current bin, log a message
-          console.log(`${imageName} dropped into bin ${index}`);
-          fetch('http://localhost:5000/waste-check', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ imageName: imageName, binNum: index })
-          })
-          .catch(error => {
-            console.error('Error:', error);
-          });
+  const handleDrop = (imageName, bin, setImageVisibilityFn, setScore) => {
+    console.log("drop handling ");
+      console.log(`${imageName} dropped into bin ${bin}`);
+     
+      // Perform waste check
+      fetch('http://localhost:5000/waste-check', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ imageName: imageName, binNum: bin })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data && data.success) {
+          setImageVisibilityFn(prevVisibility => ({
+            ...prevVisibility,
+            [imageName]: false
+          }));
+          // Set a random image visibility if the waste check was successful
+          const images = Object.keys(imageVisibility);
+          const randomIndex = Math.floor(Math.random() * images.length);
+          const randomImage = images[randomIndex];
+          setImageVisibilityFn(prevVisibility => ({
+            ...prevVisibility,
+            [randomImage]: true
+          }));
+          setScore(prevScore => prevScore + 1);
+        } else {
+          console.error('Error:', data.message);
         }
-    });
-  };
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    };
+    
+  // Listen for keyboard inputs
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      // Get the pressed key
+      const key = e.key;
+  
+      // Handle the drop based on the pressed key
+      switch (key) {
+        case '1':
+          handleDropImage1(Object.keys(imageVisibility).find(key => imageVisibility[key]), 0);
+          break;
+        case '2':
+          handleDropImage1(Object.keys(imageVisibility).find(key => imageVisibility[key]), 1);
+          break;
+        case '3':
+          handleDropImage1(Object.keys(imageVisibility).find(key => imageVisibility[key]), 2);
+          break;
+        case 'ArrowLeft':
+          handleDropImage2(Object.keys(imageVisibility2).find(key => imageVisibility2[key]), 0);
+          break;
+        case 'ArrowDown':
+          handleDropImage2(Object.keys(imageVisibility2).find(key => imageVisibility2[key]), 1);
+          break;
+        case 'ArrowRight':
+          handleDropImage2(Object.keys(imageVisibility2).find(key => imageVisibility2[key]), 2);
+          break;
+        default:
+          break;
+      }
+    };
+    
+    window.addEventListener('keydown', handleKeyDown);
+  
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [imageVisibility, imageVisibility2]);
 
   return (
-    <div class="split-screen">
-        <div class="left">
+    <div className="split-screen">
+        <div className="left">
         <div className="gameplay">
-            <div class="bin-bar-left">
+            <div className="bin-bar-left">
             <div>
-                <img src="bins/garbage.png" class="bin"></img>
-                <img src="bins/recycling.png" class="bin"></img>
-                <img src="bins/compost.png" class="bin"></img>
+                <img src="bins/garbage.png" className="bin"></img>
+                <img src="bins/recycling.png" className="bin"></img>
+                <img src="bins/compost.png" className="bin"></img>
             </div>
-            <img src="wizard.png" class="wizard-left"></img>
+            <img src="avatars/catWizard.png" className="wizard-left"></img>
             </div>
         </div>
         {Object.entries(imageVisibility).map(([imageName, isVisible]) => (
@@ -122,40 +163,34 @@ function Multiplayer() {
                 src={`waste/${imageName}.png`} // Use template literals to dynamically set the image source
                 className="draggable"
                 style={{
-                position: 'absolute',
-                top: `${Math.random() * (maxTop1 - minTop1) + minTop1}px`, // Generate random top position 
-                left: `${Math.random() * (maxLeft1 - minLeft1) + minLeft1}px`, // Generate random left position
+                  position: 'absolute',
+                  top: '40%',
+                  left: '23%',
                 }}      
                 onDragStart={(e) => handleDragStart(e, imageName)}
-                onDragEnd={(e) => handleDrop(e, imageName)}
-                onDragOver={handleDragOver}
                 alt={imageName}
             />
             )
         ))}
-        <img
-            style={{
-            position: 'absolute',
-            top: `${Math.random() * (maxTop1 - minTop1) + minTop1}px`, // Generate random top position 
-            left: `${Math.random() * (maxLeft1 - minLeft1) + minLeft1}px`, // Generate random left position
-            }}      
-            src="powerup.png" class="draggable"/>
+        <div class="score-container">
+          <p>Player 1 - Score: { score1 }</p>
+        </div>
         <div>
             <img src="portal.png" className="portal"/>
         </div>
         </div>
         <div className="right">
         <div className="gameplay">
-            <div class="bin-bar-right">
+            <div className="bin-bar-right">
             <div>
-                <img src="bins/garbage.png" class="bin"></img>
-                <img src="bins/recycling.png" class="bin"></img>
-                <img src="bins/compost.png" class="bin"></img>
+                <img src="bins/garbage.png" className="bin"></img>
+                <img src="bins/recycling.png" className="bin"></img>
+                <img src="bins/compost.png" className="bin"></img>
             </div>
-            <img src="wizard.png" class="wizard"></img>
+            <img src="wizard.png" className="wizard"></img>
             </div>
         </div>
-        {Object.entries(imageVisibility).map(([imageName, isVisible]) => (
+        {Object.entries(imageVisibility2).map(([imageName, isVisible]) => (
             isVisible && (
             <img
                 key={imageName} // Add a unique key for each image
@@ -163,24 +198,19 @@ function Multiplayer() {
                 className="draggable"
                 style={{
                 position: 'absolute',
-                top: `${Math.random() * (maxTop2 - minTop2) + minTop2}px`, // Generate random top position 
-                left: `${Math.random() * (maxLeft2 - minLeft2) + minLeft2}px`, // Generate random left position
+                top: '40%',
+                left: '73%',    
                 }}      
                 onDragStart={(e) => handleDragStart(e, imageName)}
-                onDragEnd={(e) => handleDrop(e, imageName)}
-                onDragOver={handleDragOver}
                 alt={imageName}
             />
             )
         ))}
-        <img
-            style={{
-            position: 'absolute',
-            top: `${Math.random() * (maxTop2 - minTop2) + minTop2}px`, // Generate random top position 
-            left: `${Math.random() * (maxLeft2 - minLeft2) + minLeft2}px`, // Generate random left position
-            }}      
-            src="powerup.png" class="draggable"/>
+        <div class="score-container">
+          <p>Player 2 - Score: { score2 }</p>
         </div>
+        </div>
+        <MultiWinModal isOpen={isWin} onClose={'/Multiplayer'} winner={winner} />
     </div>
   );
 }

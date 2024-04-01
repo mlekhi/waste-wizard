@@ -1,23 +1,23 @@
 from classes.avatar import *
 import csv
 
-        """
-        The class provides methods to manage the player's login, logout, item purchase, and account updates, 
-        as well as getters and setters for each attribute to encapsulate the state of a player object
-        
-        name (str): The name of the player.
-        userID (str): A unique identifier for the player.
-        userPassword (str): The password for the player's account.
-        currentAvatar (Avatar): The current avatar object associated with the player.
-        coins (int): The number of coins the player has.
-        isTeacher (bool): Flag indicating whether the player is a teacher.
-        isDeveloper (bool): Flag indicating whether the player is a developer.
-        inventory (Inventory): The inventory object containing items the player owns.
-        totalScore (int): The total score accumulated by the player.
-        lastLevel (int): The last level the player reached.
-        teacherID (str): A unique identifier for the teacher associated with the player (if applicable).
+"""
+The class provides methods to manage the player's login, logout, item purchase, and account updates, 
+as well as getters and setters for each attribute to encapsulate the state of a player object
 
-        """
+name (str): The name of the player.
+userID (str): A unique identifier for the player.
+userPassword (str): The password for the player's account.
+currentAvatar (Avatar): The current avatar object associated with the player.
+coins (int): The number of coins the player has.
+isTeacher (bool): Flag indicating whether the player is a teacher.
+isDeveloper (bool): Flag indicating whether the player is a developer.
+inventory (Inventory): The inventory object containing items the player owns.
+totalScore (int): The total score accumulated by the player.
+lastLevel (int): The last level the player reached.
+teacherID (str): A unique identifier for the teacher associated with the player (if applicable).
+
+"""
 
 class Player:
     def __init__(self):
@@ -33,14 +33,12 @@ class Player:
         self._lastLevel = 1          # Integer
         self._teacherID = None          # String
     
-        """
-        Appends the current player's information to a CSV file.
+    """
+    Appends the current player's information to a CSV file.
 
-        This method updates 'game-data/accounts.csv' by appending the current state
-        of the player's attributes. Each player is represented as a row in the CSV file.
-        """
-
-
+    This method updates 'game-data/accounts.csv' by appending the current state
+    of the player's attributes. Each player is represented as a row in the CSV file.
+    """
     def update_accounts_csv(self):
         with open('game-data/accounts.csv', 'a', newline='') as csvfile:
             fieldnames = ['Name', 'UserID', 'Password', 'currentAvatar', 'Coins',
@@ -61,19 +59,20 @@ class Player:
                 'TotalScore': self._totalScore,
                 'TeacherID': self._teacherID,
             })
-        """
-        Authenticates a player using a username and password.
+        
+    """
+    Authenticates a player using a username and password.
 
-        Args:
-            username (str): The username to authenticate
-            password (str): The password to authenticate
+    Args:
+        username (str): The username to authenticate
+        password (str): The password to authenticate
 
-        Returns:
-            bool: True if authentication is successful and player data is loaded, False otherwise.
+    Returns:
+        bool: True if authentication is successful and player data is loaded, False otherwise.
 
-        This method checks the game-data/accounts.csv file for the provided username and password.
-        If a match is found, it initializes the Player object with the user's data.
-        """
+    This method checks the game-data/accounts.csv file for the provided username and password.
+    If a match is found, it initializes the Player object with the user's data.
+    """
     def login(self, username, password) -> bool:
         count = 2
         with open('game-data/accounts.csv', newline='') as csvfile:
@@ -115,16 +114,15 @@ class Player:
             })
         return False
 
+    """
+    Updates the player's information in the CSV file upon logout
 
-        """
-        Updates the player's information in the CSV file upon logout
+    This method reads the game-data/accounts.csv file locates the player's row based on userID and userPassword
+    updates the row with the current player state and writes the changes back to the file.
 
-        This method reads the game-data/accounts.csv file locates the player's row based on userID and userPassword
-        updates the row with the current player state and writes the changes back to the file.
-
-        Returns:
-            bool: True if the update was successful, False otherwise.
-        """
+    Returns:
+        bool: True if the update was successful, False otherwise.
+    """
     def logout(self):
         rows = []
         updated = False
@@ -151,28 +149,28 @@ class Player:
 
         return updated
        
-        """
-        Allows the player to purchase an item if they have enough coins.
+    """
+    Allows the player to purchase an item if they have enough coins.
 
-        Args:
-            item (str): The item to be purchased.
-            price (int): The price of the item.
+    Args:
+        item (str): The item to be purchased.
+        price (int): The price of the item.
 
-        Returns:
-            bool: True if the purchase is successful, False otherwise.
-        """
+    Returns:
+        bool: True if the purchase is successful, False otherwise.
+    """
     def purchaseItem(self, item, price):
         # needs to be implemented
         # coins take away price
         # add the item to the inventory object
         return True
     
-        """
-        Determines the player's type based on their attributes
+    """
+    Determines the player's type based on their attributes
 
-        Returns:
-            str: The type of the playe which can be "Student"  "Developer" "Teacher"  or "Admin".
-        """
+    Returns:
+        str: The type of the playe which can be "Student"  "Developer" "Teacher"  or "Admin".
+    """
     def get_playerType(self):
         if self._isDeveloper == False and self._isTeacher == False:
             return "Student"
@@ -183,8 +181,7 @@ class Player:
         else:
             return "Admin"
 
-     "Getter and setter for name"
-
+    "Getter and setter for name"
     def get_name(self):
         return self._name
 
@@ -200,7 +197,7 @@ class Player:
         self._userID = userID
         self.update_accounts_csv()
 
-   " # Getter and setter for userPassword"
+    "# Getter and setter for userPassword"
     def get_userPassword(self):
         return self._userPassword
 
@@ -224,7 +221,7 @@ class Player:
         self._coins = coins
         self.update_accounts_csv()
 
-   " # Getter and setter for isTeacher"
+    "# Getter and setter for isTeacher"
     def is_teacher(self):
         return self._isTeacher
 
@@ -232,7 +229,7 @@ class Player:
         self._isTeacher = isTeacher
         self.update_accounts_csv()
 
-   " # Getter and setter for isDeveloper"
+    "# Getter and setter for isDeveloper"
     def is_developer(self):
         return self._isDeveloper
 
