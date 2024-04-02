@@ -16,7 +16,7 @@ function Play() {
   const [isGameOver, setIsGameOver] = useState(false);
   const [isWin, setIsWin] = useState(false);
   const [imageVisibility, setImageVisibilityState] = useState({
-    bananaPeel: true,
+    bananaPeel:true,
     paper: true,
     can: true,
     cheese: true,
@@ -38,12 +38,6 @@ function Play() {
   const maxLeft = window.innerWidth * 0.70; // Maximum left position (75% from the left)
 
   const location = useLocation(); // Initialize useLocation hook
-
-  useEffect(() => {
-    const searchParams = new URLSearchParams(location.search);
-    const levelFromQuery = parseInt(searchParams.get('level')) || 1; 
-    setLevel(levelFromQuery);
-  }, [location.search]); 
 
   useEffect(() => {
     const fetchAvatar = async () => {
@@ -106,6 +100,7 @@ function Play() {
 
   const setInitialImagePositions = () => {
     const initialImageVisibility = {};
+    
     for (const key in imageVisibility){
       initialImageVisibility[key] = {
         isVisible: true,
@@ -333,7 +328,7 @@ const handleDrop = (e, imageName) => {
         <p class="facts">{fact}</p>
       </div>
       <div>
-        {avatar && <img src={`avatars/${avatar}.png`} className="avatar" alt="Avatar" />}
+        {avatar && <img src={`avatars/${avatar}.png`} className="wizard" alt="Avatar" />}
       </div>
       <div>
         <img src="portal.png" className="portal"/>

@@ -4,6 +4,7 @@ import MultiWinModal from '../../components/MultiWinModal/MultiWinModal';
 
 function Multiplayer() {
   const [draggedItem, setDraggedItem] = useState(null);
+  const [avatar, setAvatar] = useState(null);
   const [winner, setWinner] = useState('');
   const [score1, setScore1] = useState(0);
   const [score2, setScore2] = useState(0);
@@ -38,6 +39,24 @@ function Multiplayer() {
     potatoPeel: false,
     takeOutContainer: false,
   });
+  
+  useEffect(() => {
+    const fetchAvatar = async () => {
+      try{
+          const response = await fetch('http://localhost:5000/get-avatar');
+          if(!response.ok) {
+            throw new Error('Failed to fetch avatar');
+          }
+          const data = await response.json();
+          setAvatar(data.avatar)
+        }
+        catch (error) {
+          console.error(error);
+        }
+    };
+    fetchAvatar();
+  }, []);
+
   
   const handleDragStart = (e, imageName) => {
     setDraggedItem(imageName);
@@ -153,7 +172,7 @@ function Multiplayer() {
                 <img src="bins/recycling.png" className="bin"></img>
                 <img src="bins/compost.png" className="bin"></img>
             </div>
-            <img src="avatars/catWizard.png" className="wizard-left"></img>
+              {avatar && <img src={`avatars/${avatar}.png`} className="wizard-left" alt="Avatar" />}
             </div>
         </div>
         {Object.entries(imageVisibility).map(([imageName, isVisible]) => (

@@ -437,7 +437,7 @@ Endpoint for equipped a purchased avatar.
 @app.route('/get-avatar')
 def avatar():
     try:
-        avatar = player.get_currentAvatar
+        avatar = player.get_currentAvatar()
         
         return jsonify({'avatar': avatar}), 200
     
