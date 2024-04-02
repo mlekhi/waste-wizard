@@ -1,6 +1,12 @@
-body{
-  text-align: center;
-  background-color: #ffffff;
+body{ 
+  text-align: center; 
+  background-color: #ffffff; 
+} 
+
+p{ 
+  max-width: 600px; 
+  margin: 0 auto; 
+  text-align: center; 
 }
 
 button{
