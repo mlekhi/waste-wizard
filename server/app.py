@@ -397,6 +397,9 @@ def purchase():
     if player_coins is None:
         raise ValueError("Player coins are None.")
     
+    if avatar_cost > player_coins:
+        return jsonify({'message': 'Insufficient coins', 'status': 'error'}), 400
+    
     new_player_coins = player_coins - avatar_cost
     
     player.set_coins(new_player_coins)
@@ -423,6 +426,24 @@ def equip():
     
     except Exception as e:
         return jsonify({'error': str(e), 'status': 'error'}), 500
+
+
+"""
+Endpoint for equipped a purchased avatar. 
+
+    Returns:
+        int: 
+"""
+@app.route('/get-avatar')
+def avatar():
+    try:
+        avatar = player.get_currentAvatar
+        
+        return jsonify({'avatar': avatar}), 200
+    
+    except Exception as e:
+        return jsonify({'error': str(e), 'status': 'error'}), 500
+
 
 """
 Show the current equipped avatar. 

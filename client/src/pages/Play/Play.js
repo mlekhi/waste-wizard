@@ -116,22 +116,7 @@ function Play() {
     setImageVisibilityState(initialImageVisibility);
   };  
 
-  const setFurtherImagePositions = () => {
-    const updatedImageVisibility = { ...imageVisibility };
-  
-    for (const key in updatedImageVisibility) {
-      if (updatedImageVisibility[key].isVisible) {
-        updatedImageVisibility[key] = {
-          ...updatedImageVisibility[key],
-          top: Math.random() * (maxTop - minTop) + minTop,
-          left: Math.random() * (maxLeft - minLeft) + minLeft,
-        };
-      }
-    }
-  
-    setImageVisibilityState(updatedImageVisibility);
-  };
-  
+
   const decrementStrikes = () => {
     setStrikes(prevStrikes => prevStrikes - 1);
   };  
@@ -261,11 +246,11 @@ const handleDrop = (e, imageName) => {
             console.error('Error:', error);
           });
 
-          // Hide the dragged item from the screen
           setImageVisibilityState(prevState => ({
             ...prevState,
-            [imageName]: false
+            [imageName]: { ...prevState[imageName], isVisible: false }
           }));
+
         } else {
           console.log("wrong bin");
           if (Math.random() < 0.2) {
@@ -296,15 +281,6 @@ const handleDrop = (e, imageName) => {
   });
 };
 
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setFurtherImagePositions();
-    }, 10000 - level * 900);
-
-    return () => clearInterval(intervalId);
-  }, [level]);
-
   return (
     <div className="main">
       <div className="header">
@@ -326,7 +302,6 @@ const handleDrop = (e, imageName) => {
             <img src="bins/recycling.png" class="bin"></img>
             <img src="bins/compost.png" class="bin"></img>
           </div>
-          {avatar && <img src={`avatars/${avatar}.png`} className="avatar" alt="Avatar" />}
         </div>
       </div>
       {Object.entries(imageVisibility).map(([imageName, { isVisible, top, left}]) => (
@@ -356,6 +331,9 @@ const handleDrop = (e, imageName) => {
         src="powerup.png" class="draggable"/>
       <div class="facts-container">
         <p class="facts">{fact}</p>
+      </div>
+      <div>
+        {avatar && <img src={`avatars/${avatar}.png`} className="avatar" alt="Avatar" />}
       </div>
       <div>
         <img src="portal.png" className="portal"/>
