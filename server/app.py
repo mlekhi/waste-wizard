@@ -292,15 +292,16 @@ Provides access to student information for instructors
 def instructor_access():
     try:
         teacher_id = player.get_userID()
+        print(teacher_id)
 
         students = []
 
-        if (player.get_playerType() == "Teacher"):  # Corrected method call
+        if (player.is_teacher()):  # Corrected method call
 
             with open('game-data/accounts.csv', newline='') as csvfile:
                 reader = csv.DictReader(csvfile)
                 for row in reader:
-                    print("true")
+                    print(row['userID'])
                     if row.get('teacherID') == teacher_id:
                         print("add")
                         student_info = {

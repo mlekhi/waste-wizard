@@ -6,14 +6,3 @@ h2{
 table {
     width: 100%;
   }
-  
-  th {
-    padding: 8px; /* Adjust padding as needed */
-    border-bottom: 1px solid #ddd; /* Add a bottom border for separation */
-  }
-  
-  td {
-    padding: 8px; /* Adjust padding as needed */
-    border-bottom: 1px solid #ddd; /* Add a bottom border for separation */
-  }
-  

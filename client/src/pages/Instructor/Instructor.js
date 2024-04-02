@@ -27,26 +27,24 @@ function Instructor() {
                 <h1>Player Data</h1>
 
                 <table>
-                    <div>
-                        <thread>
-                            <tr>
-                              <th>Player Name</th>
-                              <th>Levels Completed</th>
-                              <th>Total Score</th>
-                              <th>Coins Collected</th>
+                    <thead>
+                        <tr>
+                            <th>Player Name</th>
+                            <th>Levels Completed</th>
+                            <th>Total Score</th>
+                            <th>Coins Collected</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {students.map((student, index) => (
+                            <tr key={index}>
+                                <td>{student.userID}</td>
+                                <td>{student.lastLevel}</td>
+                                <td>{student.totalScore}</td>
+                                <td>{student.coins}</td>
                             </tr>
-                        </thread>
-                        <tbody>
-                            {students.map((student, index) => (
-                                <tr key={index}>
-                                    <td>{student.userID}</td>
-                                    <td>{student.lastLevel}</td>
-                                    <td>{student.totalScore}</td>
-                                    <td>{student.coins}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </div>
+                        ))}
+                    </tbody>
                 </table>
             </body>
         </>
