@@ -93,7 +93,7 @@ function Play() {
     fetchScore();
     fetchLevel();
     setInitialImagePositions();
-  }, []); // Empty dependency array to run only once on component mount
+  }, []); 
 
   useEffect(() => {
     if(isWin){
@@ -117,16 +117,20 @@ function Play() {
   };  
 
   const setFurtherImagePositions = () => {
-    const initialImageVisibility = {};
-    for (const key in imageVisibility){
-      initialImageVisibility[key] = {
-        isVisible: true,
-        top: Math.random() * (maxTop - minTop) + minTop,
-        left: Math.random() * (maxLeft - minLeft) + minLeft,
-      };
+    const updatedImageVisibility = { ...imageVisibility };
+  
+    for (const key in updatedImageVisibility) {
+      if (updatedImageVisibility[key].isVisible) {
+        updatedImageVisibility[key] = {
+          ...updatedImageVisibility[key],
+          top: Math.random() * (maxTop - minTop) + minTop,
+          left: Math.random() * (maxLeft - minLeft) + minLeft,
+        };
+      }
     }
-    setImageVisibilityState(initialImageVisibility);
-  };  
+  
+    setImageVisibilityState(updatedImageVisibility);
+  };
   
   const decrementStrikes = () => {
     setStrikes(prevStrikes => prevStrikes - 1);
