@@ -1,23 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Tutorial.css';
 
 function Tutorial() {
+  // State to manage the currently displayed image
+  const [currentImage, setCurrentImage] = useState('WASTEWIZARDLOGO.png');
+
+  // Function to change the displayed image
+  const changeImage = (imagePath) => {
+    setCurrentImage(imagePath);
+  };
+
   return (
     <div>
       <h1>HOW TO PLAY!</h1>
-      <video id="Temp" width="640" height="360" controls>
-          <source src="path_to_video/video.mp4" type="video/mp4"></source>
-      </video>
+      <img src={currentImage} alt="Tutorial" height="360" />
 
       <div>
-          <button onClick="seekToTime(0)">Time Stamp 1</button>
-          <button onClick="seekToTime(30)">Time Stamp 2</button>
-          <button onClick="seekToTime(60)">Time Stamp 3</button>
+        <button onClick={() => changeImage('Play.png')}>Play</button>
+        <button onClick={() => changeImage('Multiplayer.png')}>Multiplayer</button>
+        <button onClick={() => changeImage('Shop.png')}>Shop</button>
       </div>
       <div>
-        <button onClick="seekToTime(0)">Time Stamp 4</button>
-        <button onClick="seekToTime(30)">Time Stamp 5</button>
-        <button onClick="seekToTime(60)">Time Stamp 6</button>
+        <button onClick={() => changeImage('Leaderboard.png')}>Leaderboard</button>
+        <button onClick={() => changeImage('Debug.png')}>Debug</button>
+        <button onClick={() => changeImage('Login.png')}>Login</button>
       </div>
     </div>
   );
