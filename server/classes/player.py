@@ -41,24 +41,28 @@ class Player:
     """
 
     def update_accounts_csv(self):
-        with open('game-data/accounts.csv', 'a', newline='') as csvfile:
-            fieldnames = ['UserID', 'Password', 'currentAvatar', 'Coins',
-                          'IsTeacher', 'IsDeveloper', 'Inventory', 'LastLevel', 'TotalScore', 'TeacherID']
-            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        rows = []
+        updated = False
 
-            # Write the player's information to the CSV file
-            writer.writerow({
-                'UserID': self._userID,
-                'Password': self._userPassword,
-                'currentAvatar': self._currentAvatar,
-                'Coins': self._coins,
-                'IsTeacher': self._isTeacher,
-                'IsDeveloper': self._isDeveloper,
-                'Inventory': self._inventory,
-                'LastLevel': self._lastLevel,
-                'TotalScore': self._totalScore,
-                'TeacherID': self._teacherID,
-            })
+        # Read the CSV file and locate the row to update
+        with open('game-data/accounts.csv', 'r', newline='') as csvfile:
+            reader = csv.DictReader(csvfile)
+            for row in reader:
+                if row['userID'] == self._userID and row['userPassword'] == self._userPassword:
+                    # Update the row with new data
+                    row.update({'currentAvatar': self._currentAvatar, 'coins': self._coins, 'isTeacher': self._isTeacher,
+                               'isDeveloper': self._isDeveloper, 'inventory': self._inventory, 'totalScore': self._totalScore, 'lastLevel': self._lastLevel, 'teacherID': self._teacherID})
+                    updated = True
+                rows.append(row)
+
+        # Write the updated data back to the CSV file
+        with open('game-data/accounts.csv', 'w', newline='') as csvfile:
+            fieldnames = ['userID', 'userPassword', 'currentAvatar', 'coins',
+                          # Update fieldnames as per your CSV
+                          'isTeacher', 'isDeveloper', 'inventory', 'totalScore', 'lastLevel', 'teacherID']
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+            writer.writeheader()
+            writer.writerows(rows)
 
     """
     Authenticates a player using a username and password.
@@ -112,7 +116,7 @@ class Player:
                 'inventory': [0],
                 'totalScore': 0,
                 'lastLevel': 0,
-                'teacherID': null
+                'teacherID': None
             })
         return False
 
@@ -251,6 +255,7 @@ class Player:
         self.update_accounts_csv()
 
     "# Adding a new avatar purchase to the inventory"
+
     def add_inventory(self, avatar_index):
         inventory = self.get_inventory()
         inventory.append(str(avatar_index))
@@ -283,3 +288,10 @@ class Player:
     def set_teacherID(self, teacherID):
         self._teacherID = teacherID
         self.update_accounts_csv()
+
+
+# player = Player()
+# player.login('mlekhi', 'password')
+# player._totalScore = 0
+
+# player.update_accounts_csv()
