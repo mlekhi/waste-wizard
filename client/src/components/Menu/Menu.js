@@ -37,7 +37,7 @@ function Menu() {
           throw new Error('Failed to check login status');
         }
         const data = await response.json();
-        setIsLoggedIn(true);
+        setIsLoggedIn(data.logged_in);
 
         const responseInstructor = await fetch('http://localhost:5000/get-instructor');
         if (!responseInstructor.ok) {

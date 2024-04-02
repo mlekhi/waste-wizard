@@ -4,8 +4,26 @@ import './Debug.css';
 function Debug() {
   const levels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-  const handleLevelButton = (level) => {
-    window.location.href = `/Play?level=${level}`;
+  const handleLevelButton = async (level) => {
+    try {
+      const response = await fetch('http://localhost:5000/set-level', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ level_set: level })
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to set level');
+      } else {
+        window.location.href = `/Play`;
+      }
+      
+      console.log(`Level ${level} set successfully`);
+    } catch (error) {
+      console.error('Error setting level:', error.message);
+    }
   };
 
   return (

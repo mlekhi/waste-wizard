@@ -122,11 +122,6 @@ def is_logged_in():
         return jsonify({'logged_in': True}), 200
     else:
         return jsonify({'logged_in': False}), 200
-    # if ('player' in globals() and player is not None):
-    #     return jsonify({'logged_in': True}), 200
-    # else:
-    #     return jsonify({'logged_in': False}), 200
-
 
 """
 Check if the selected waste item is placed in the correct bin.
@@ -284,10 +279,6 @@ def set_level():
             return jsonify({'error': 'No in-range level provided in the request'}), 400
     else:
         return jsonify({'error': 'Not a Developer'}), 403
-
-    # let them set according to whatever level number they choose
-    # this should be a post requet
-
 
 """
 Provides access to student information for instructors

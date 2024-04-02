@@ -1,5 +1,3 @@
-// to do: random location generation (based on api level check), have sorted items disappear
-
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom'; // Import the useLocation hook
 import './Play.css';
@@ -98,19 +96,19 @@ function Play() {
       };
     }
     setImageVisibilityState(initialImageVisibility);
-  };
+  };  
 
-
-  
-  function setImageVisibility(imageName, isVisible) {
-    setImageVisibility(prevState => ({
-      ...prevState,
-      [imageName]: {
-        ...prevState[imageName],
-        isVisible: isVisible,
-      },
-    }));
-  }  
+  const setFurtherImagePositions = () => {
+    const initialImageVisibility = {};
+    for (const key in imageVisibility){
+      initialImageVisibility[key] = {
+        isVisible: true,
+        top: Math.random() * (maxTop - minTop) + minTop,
+        left: Math.random() * (maxLeft - minLeft) + minLeft,
+      };
+    }
+    setImageVisibilityState(initialImageVisibility);
+  };  
   
   const decrementStrikes = () => {
     setStrikes(prevStrikes => prevStrikes - 1);
@@ -181,110 +179,109 @@ function Play() {
     }
   }, [strikes, imageVisibility]);
 
-  const handleDrop = (e, imageName) => {
-    console.log("drop handling");
-    e.preventDefault();
+const handleDrop = (e, imageName) => {
+  console.log("drop handling");
+  e.preventDefault();
 
+  // Get the coordinates of the drop event
+  const dropX = e.clientX;
+  const dropY = e.clientY;
 
-    // Get the coordinates of the drop event
-    const dropX = e.clientX;
-    const dropY = e.clientY;
- 
-    // Get all bin elements
-    const binElements = document.querySelectorAll('.bin');
- 
-    // Iterate through each bin element
-    binElements.forEach((binElement, index) => {
-      // Get the bounding box of the bin element
-      const binRect = binElement.getBoundingClientRect();
- 
-      // Check if the drop occurred within the bounds of the current bin
-      if (
-        dropX >= binRect.left &&
-        dropX <= binRect.right &&
-        dropY >= binRect.top &&
-        dropY <= binRect.bottom
-        ) {
-          // If the drop occurred within the current bin, log a message
-          console.log(`${imageName} dropped into bin ${index}`);
-          fetch('http://localhost:5000/waste-check', {
+  // Get all bin elements
+  const binElements = document.querySelectorAll('.bin');
+
+  // Iterate through each bin element
+  binElements.forEach((binElement, index) => {
+    // Get the bounding box of the bin element
+    const binRect = binElement.getBoundingClientRect();
+
+    // Check if the drop occurred within the bounds of the current bin
+    if (
+      dropX >= binRect.left &&
+      dropX <= binRect.right &&
+      dropY >= binRect.top &&
+      dropY <= binRect.bottom
+    ) {
+      // If the drop occurred within the current bin, log a message
+      console.log(`${imageName} dropped into bin ${index}`);
+      fetch('http://localhost:5000/waste-check', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ imageName: imageName, binNum: index })
+      })
+      .then(response => response.json())
+      .then(data => {
+        // If fetch returns true, update the score
+        if (data && data.success) {
+          console.log("correct bin");
+          // Update score after successful drop
+          if (Math.random() < 0.2) {
+            setShowWand(true)
+          }
+          fetch('http://localhost:5000/update-score', {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json' // Specify the content type as JSON
             },
-            body: JSON.stringify({ imageName: imageName, binNum: index })
+            body: JSON.stringify({ score_update: 5 })
           })
           .then(response => response.json())
           .then(data => {
-            setImageVisibility(imageName, false);
-            // If fetch returns true, hide the image
-            if (data && data.success) {
-              console.log("correct bin");
-              // Update score after successful drop
-              if (Math.random() < 0.2) {
-                setShowWand(true)
-              }
-              fetch('http://localhost:5000/update-score', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json' // Specify the content type as JSON
-                },          
-                body: JSON.stringify({ score_update: 5 })
-              }
-
-
-              )
-              .then(response => response.json())
-              .then(data => {
-                if (data) {
-                  // Update score state variable
-                  setScore(data.score);
-                  console.log("update score");
-                }
-              })
-              .catch(error => {
-                console.error('Error:', error);
-              });
-            } else {
-              console.log("wrong bin");
-              if (Math.random() < 0.2) {
-                setShowWand(true)
-              }
-              fetch('http://localhost:5000/update-score', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json' // Specify the content type as JSON
-                },          
-                body: JSON.stringify({ score_update: -3 })
-              })
-              .then(response => response.json())
-              .then(data => {
-                if (data) {
-                  // Update score state variable
-                  decrementStrikes();
-                  setScore(data.score);
-                  console.log("update score");
-                }
-              })
+            if (data) {
+              // Update score state variable
+              setScore(data.score);
+              console.log("update score");
             }
           })
           .catch(error => {
             console.error('Error:', error);
           });
+
+          // Hide the dragged item from the screen
+          setImageVisibilityState(prevState => ({
+            ...prevState,
+            [imageName]: false
+          }));
+        } else {
+          console.log("wrong bin");
+          if (Math.random() < 0.2) {
+            setShowWand(true)
+          }
+          fetch('http://localhost:5000/update-score', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json' // Specify the content type as JSON
+            },
+            body: JSON.stringify({ score_update: -3 })
+          })
+          .then(response => response.json())
+          .then(data => {
+            if (data) {
+              // Update score state variable
+              decrementStrikes();
+              setScore(data.score);
+              console.log("update score");
+            }
+          })
         }
-    });
-  };
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    }
+  });
+};
 
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setInitialImagePositions();
-    }, 10000 - level * 500);
+      setFurtherImagePositions();
+    }, 10000 - level * 900);
 
     return () => clearInterval(intervalId);
   }, [level]);
-
-
 
   return (
     <div className="main">
@@ -342,7 +339,7 @@ function Play() {
         <img src="portal.png" className="portal"/>
       </div>
       <Modal isOpen={isPaused} onClose={handleResumeButton} onQuit={handleQuitGame} />
-      <WinModal isOpen={isGameOver && isWin} onClose={handleResumeButton} score={score} />
+      <WinModal isOpen={isGameOver && isWin} onClose={handleResumeButton} score={score} /> 
       <LoseModal isOpen={isGameOver && !isWin} onClose={handleResumeButton} onRedoLevel={handleRedoLevel} onQuitGame={handleQuitGame} />
     </div>
   );
