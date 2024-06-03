@@ -11,6 +11,7 @@ function Play() {
   const [score, setScore] = useState(0);
   const [level, setLevel] = useState(0);
   const [strikes, setStrikes] = useState(3);
+  const [sorted, setSorted] = useState(0);
   const [fact, setFact] = useState('');
   const [isPaused, setIsPaused] = useState(false);
   const [isGameOver, setIsGameOver] = useState(false);
@@ -153,8 +154,40 @@ function Play() {
 
   const handleResumeButton = () => {
     setIsPaused(false);
+    setIsWin(false);
+    setIsGameOver(false);
   };
 
+  const handleWin = () => {
+    setIsPaused(false);
+    setIsWin(false);
+    setIsGameOver(false);
+  
+    const updateLevel = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/update-level', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ level: level + 1 })
+        });
+    
+        if (!response.ok) {
+          throw new Error('Failed to update level');
+        }
+    
+        const data = await response.json();
+        console.log('Level updated successfully:', data);
+      } catch (error) {
+        console.error('Error updating level:', error);
+      }
+    };
+  
+    updateLevel();
+    setSorted(0);
+  };
+  
   const handlePauseButton = () => {
     setIsPaused(true);
   };
@@ -169,12 +202,6 @@ function Play() {
   }
 
   useEffect(() => {
-    const garbageLeft = Object.values(imageVisibility).some(isVisible => isVisible);
-    if(!garbageLeft){
-      setIsGameOver(true);
-      setIsWin(true);
-      setIsPaused(true);
-    }
     if(strikes === 0){
       setIsGameOver(true);
       setIsPaused(true);
@@ -246,6 +273,13 @@ const handleDrop = (e, imageName) => {
             [imageName]: { ...prevState[imageName], isVisible: false }
           }));
 
+          setSorted(prevSorted => prevSorted + 1);
+          console.log("sorted", sorted)
+          console.log("level",level)
+          if (sorted >= level) {
+            setIsWin(true);
+            setIsGameOver(true);
+          }          
         } else {
           console.log("wrong bin");
           if (Math.random() < 0.2) {
@@ -334,7 +368,7 @@ const handleDrop = (e, imageName) => {
         <img src="portal.png" className="portal"/>
       </div>
       <Modal isOpen={isPaused} onClose={handleResumeButton} onQuit={handleQuitGame} />
-      <WinModal isOpen={isGameOver && isWin} onClose={handleResumeButton} score={score} /> 
+      <WinModal isOpen={isGameOver && isWin} onClose={handleWin} score={score} /> 
       <LoseModal isOpen={isGameOver && !isWin} onClose={handleResumeButton} onRedoLevel={handleRedoLevel} onQuitGame={handleQuitGame} />
     </div>
   );
